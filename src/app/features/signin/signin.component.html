@@ -1,0 +1,23 @@
+<div class="signin">
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="signin-form">
+        <div class="form-control">
+            <label for="usernameOrEmail">Nom d'utilisateur ou email</label>
+            <input type="text" id="usernameOrEmail" formControlName="usernameOrEmail" required>
+            <div class="error" *ngIf="usernameOrEmail?.invalid && usernameOrEmail?.touched">
+                <div *ngIf="usernameOrEmail?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" formControlName="password" required>
+            <div class="error" *ngIf="password?.invalid && password?.touched">
+                <div *ngIf="password?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+            </div>
+        </div>
+        <button type="submit">Se connecter</button>
+    </form>
+</div>

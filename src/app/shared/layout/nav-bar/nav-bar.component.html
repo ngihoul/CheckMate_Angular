@@ -1,3 +1,37 @@
-<nav>
-    
+<nav class="main-nav">
+    <ul>
+        <li>
+            <a routerLink="/" routerLinkActive="active">
+                <i class="fas fa-home"></i>
+                Accueil
+            </a>
+        </li>
+        <li>
+            <a routerLink="/tournois" routerLinkActive="active">
+                <i class="fas fa-chess"></i>
+                Tournois
+            </a>
+            <ul>
+                <li>
+                    <a routerLink="/tournois/ouverts" routerLinkActive="active">
+                        <i class="fas fa-door-open"></i>
+                        Ouverts
+                    </a>
+                </li>
+                <li>
+                    
+                    <a routerLink="/tournois/en-cours" routerLinkActive="active">
+                        <i class="fas fa-play-circle"></i>
+                        En cours
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/tournois/termines" routerLinkActive="active">
+                        <i class="fas fa-flag-checkered"></i>
+                        Terminés
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
 </nav>

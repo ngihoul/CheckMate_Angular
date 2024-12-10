@@ -1,0 +1,29 @@
+nav.main-nav {
+    width: var(--nav-width);
+    min-width: var(--nav-min-width);
+    height: calc(100vh - var(--header-height));
+    background-color: var(--color-bg-dark);
+    position: fixed;
+    top: var(--header-height);
+    padding: 0 1.2rem 1.2rem;
+
+    ul {
+        color: var(--color-bg-light);
+        padding-top: 0.8rem;
+
+        li {
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+
+            a {
+                font-family: var(--typo-heading);
+                padding: 0.8rem;
+
+                svg {
+                    width: 18px;
+                    padding-right: 0.4rem;
+                }
+            }
+        }
+    }
+}

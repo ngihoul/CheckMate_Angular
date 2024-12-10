@@ -1,0 +1,72 @@
+<div class="signup">
+    <h2>Inscrire un nouveau membre</h2>
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="signup-form">
+        <div class="form-control">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" formControlName="username" required>
+            <div class="error" *ngIf="username?.invalid && username?.touched">
+                <div *ngIf="username?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="username?.hasError('minlength')">
+                    Le nom d'utilisateur doit avoir au moins 3 caractères.
+                </div>
+                <div *ngIf="username?.hasError('maxlength')">
+                    Le nom d'utilisateur doit avoir au plus 100 caractères.
+                </div>
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" required>
+            <div class="error" *ngIf="email?.invalid && email?.touched">
+                <div *ngIf="email?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="email?.hasError('email')">
+                    Veuillez entrer une adresse email valide.
+                </div>
+                <div *ngIf="email?.hasError('maxlength')">
+                    L'email doit avoir au plus 255 caractères.
+                </div>
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" formControlName="password" required>
+            <div class="error" *ngIf="password?.invalid && password?.touched">
+                <div *ngIf="email?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="password?.hasError('pattern')">
+                    Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial parmi ceux-ci : # ? ! &#64; $ % ^ & * -
+                </div>
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="checkPassword">Confirmez le mot de passe</label>
+            <input type="password" id="checkPassword" formControlName="checkPassword" required>
+            <div *ngIf="email?.hasError('required')">
+                Ce champ est obligatoire.
+            </div>
+            <div *ngIf="signUpForm?.hasError('samePassword')">
+                Les mots de passe doivent identiques
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="dateOfBirth">Date de naissance</label>
+            <input type="date" id="dateOfBirth" formControlName="dateOfBirth" required>
+            <div *ngIf="dateOfBirth?.hasError('required')">
+                Ce champ est obligatoire.
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="gender">Genre</label>
+            <select for="gender">
+            @for(gender of genderChoices; track $index) {
+                <option value="{{ gender.value }}">{{ gender.label }}</option>
+            }
+            </select>
+        </div>
+    </form>
+</div>

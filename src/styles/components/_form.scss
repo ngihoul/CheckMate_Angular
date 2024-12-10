@@ -1,0 +1,70 @@
+/* Style général pour les formulaires */
+form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* Style pour chaque groupe de contrôle */
+.form-control {
+    margin-bottom: 1.5rem;
+}
+
+.form-control label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--color-text);
+}
+
+.form-control input,
+.form-control select,
+.form-control textarea {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-bg-light);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control input:focus,
+.form-control select:focus,
+.form-control textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.form-control select {
+    appearance: none;
+    background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4L2 0zM2 5L0 3h4l-2 2z"/></svg>') no-repeat right 0.75rem center/8px 10px;
+}
+
+/* Style pour les erreurs */
+.error {
+    color: var(--color-error);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Bouton de soumission */
+button[type="submit"] {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: var(--color-primary);
+    background-color: var(--color-bg-light);
+    border: 2px solid var(--color-primary);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--color-primary);
+    color: var(--color-bg-light);
+}

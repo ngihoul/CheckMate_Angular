@@ -1,9 +1,41 @@
 header {
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    height: var(--header-height);
+    background-color: var(--color-bg-light);
 
-    .logo-container h1 {
-        font-family: var(--typo-title);
+    .logo-container {
+        width: var(--nav-width);
+        min-width: var(--nav-min-width);
+        background-color: var(--color-bg-dark);
+        color: var(--color-bg-light);
+        border-bottom: 1px solid var(--color-text);
+        padding: 1.6rem 1.2rem 1.2rem 2.4rem;
+
+        a {
+            svg {
+                font-size: 2rem;
+                margin-right: 0.4rem;
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            font-family: var(--typo-title);
+        }
+    }
+
+    .account-container {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+
+        a:first-child {
+            margin-right: 0.8rem;
+        }
     }
 }
