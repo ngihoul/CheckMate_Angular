@@ -26,10 +26,6 @@ export class InitAccountComponent {
   onSubmit() {
     const payload = this.authService.getPayload(this.authService.getToken());
     const userId = payload.Id;
-
-    console.log("Id : " + userId);
-    console.log(payload);
-    console.log(this.initAccountForm.value);
     
     this.authService.initAccount(userId, this.initAccountForm.value).subscribe();
   }

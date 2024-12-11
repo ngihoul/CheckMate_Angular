@@ -37,5 +37,9 @@ header {
         a:first-child {
             margin-right: 0.8rem;
         }
+
+        .signin-btn, .signout-btn {
+            cursor: pointer;
+        }
     }
 }

@@ -7,13 +7,18 @@ import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { initAccountForm } from '../models/initAccountForm.model';
+import { invitationForm } from '../models/invitationForm.model';
+
+// TODO : create a token service
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   apiUrl: string;
-  isAuthenticated: boolean = false;
+  get isAuthenticated(): boolean {
+    return localStorage.getItem("token") !== null;
+  }
   isAuthenticated$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router) {
@@ -38,16 +43,19 @@ export class AuthService {
   initAccount(userId: number, credentials: initAccountForm): Observable<User> {
     return this.http.patch<User>(`${this.apiUrl}/init-account/${userId}`, credentials).pipe(
       tap((user: User) => {
-        console.log(user);
         // Refresh token
         this.login({usernameOrEmail: credentials.username, password: credentials.password} as Login).subscribe();
       })
     );
   }
 
+  invite(invitation: invitationForm): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/invite`, invitation);
+  }
+
   setToken(token: string): void {
     localStorage.setItem('token', token);
-    this.isAuthenticated = true;
+ 
     this.isAuthenticated$.next(this.isAuthenticated);
   }
 
@@ -57,7 +65,7 @@ export class AuthService {
 
   removeToken(): void {
     localStorage.removeItem('token');
-    this.isAuthenticated = false;
+
     this.isAuthenticated$.next(this.isAuthenticated);
   }
 

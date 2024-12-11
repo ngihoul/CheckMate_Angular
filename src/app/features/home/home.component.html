@@ -1,10 +1,16 @@
 <div class="home">
+
     <h2>CheckMate</h2>
-    <div class="hero">
-        <h3>Rejoignez-nous</h3>
-        <p>Rejoignez notre club CheckMate <br>et<br> participez à nos tournois de folie !</p>
-        <a class="btn cta" routerLink="/login" routerLinkActive="active">S'inscrire</a>
-    </div>
+
+    @if(isAuthenticated) {
+        <div class="hero">
+            <h3>Agrandissons la communauté</h3>
+            <p>Invite ta famille, tes amis, tes connaissances, tes collègues, etc. et agrandissons ensemble la communauté.</p>
+            <p>Comme on dit : plus on est de fous, plus on rit</p>
+            <a routerLink="/invite" class="btn cta" >Invitez</a>
+        </div> 
+    }
+    
     <div class="last-tournaments">
         <h3>Nos derniers tournois</h3>
         <div class="cards-container">

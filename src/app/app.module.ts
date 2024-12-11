@@ -10,6 +10,9 @@ import { SigninComponent } from './features/signin/signin.component';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { InitAccountComponent } from './features/init-account/init-account.component';
 import { tokenInterceptor } from './core/interceptors/token.interceptor';
+import { InviteComponent } from './features/invite/invite.component';
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './features/home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,10 +20,13 @@ import { tokenInterceptor } from './core/interceptors/token.interceptor';
     SignupComponent,
     SigninComponent,
     InitAccountComponent,
+    InviteComponent,
+    HomeComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,

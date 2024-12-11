@@ -21,7 +21,6 @@ export class SigninComponent {
   }
 
   onSubmit() {
-    console.log(this.signInForm.value);
     this.authService.login(this.signInForm.value).subscribe({ 
       next: (token: string) => this.errorMessage = undefined,
       error: (error: any) => this.errorMessage = "Une erreur est survenue" 

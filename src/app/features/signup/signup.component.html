@@ -1,6 +1,9 @@
 <div class="signup">
+
     <h2>Inscrire un nouveau membre</h2>
+
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="signup-form">
+
         <div class="form-control">
             <label for="username">Nom d'utilisateur</label>
             <input type="text" id="username" formControlName="username" required>
@@ -16,6 +19,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form-control">
             <label for="email">Email</label>
             <input type="email" id="email" formControlName="email" required>
@@ -31,6 +35,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form-control">
             <label for="password">Mot de passe</label>
             <input type="password" id="password" formControlName="password" required>
@@ -43,6 +48,7 @@
                 </div>
             </div>
         </div>
+
         <div class="form-control">
             <label for="checkPassword">Confirmez le mot de passe</label>
             <input type="password" id="checkPassword" formControlName="checkPassword" required>
@@ -53,6 +59,7 @@
                 Les mots de passe doivent identiques
             </div>
         </div>
+
         <div class="form-control">
             <label for="dateOfBirth">Date de naissance</label>
             <input type="date" id="dateOfBirth" formControlName="dateOfBirth" required>
@@ -60,6 +67,7 @@
                 Ce champ est obligatoire.
             </div>
         </div>
+
         <div class="form-control">
             <label for="gender">Genre</label>
             <select for="gender">
@@ -68,5 +76,7 @@
             }
             </select>
         </div>
+
     </form>
+    
 </div>
