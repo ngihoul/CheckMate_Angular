@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +10,23 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class HeaderComponent {
+  isAuthenticated!: boolean;
+  username: string = "";
 
+  constructor(private authService: AuthService, private router: Router) {
+    this.isAuthenticated = this.authService.isAuthenticated;
+    
+    this.authService.isAuthenticated$.subscribe({
+      next: (data: boolean) => this.isAuthenticated = data
+    });
+  }
+
+  logout(): void {
+    console.log('Clicked');
+    
+    this.authService.logout();
+    this.isAuthenticated = false;
+
+    this.router.navigate(['home']);
+  }
 }

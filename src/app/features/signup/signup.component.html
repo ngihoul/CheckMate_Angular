@@ -35,7 +35,7 @@
             <label for="password">Mot de passe</label>
             <input type="password" id="password" formControlName="password" required>
             <div class="error" *ngIf="password?.invalid && password?.touched">
-                <div *ngIf="email?.hasError('required')">
+                <div *ngIf="password?.hasError('required')">
                     Ce champ est obligatoire.
                 </div>
                 <div *ngIf="password?.hasError('pattern')">
@@ -46,7 +46,7 @@
         <div class="form-control">
             <label for="checkPassword">Confirmez le mot de passe</label>
             <input type="password" id="checkPassword" formControlName="checkPassword" required>
-            <div *ngIf="email?.hasError('required')">
+            <div *ngIf="checkPassword?.hasError('required')">
                 Ce champ est obligatoire.
             </div>
             <div *ngIf="signUpForm?.hasError('samePassword')">

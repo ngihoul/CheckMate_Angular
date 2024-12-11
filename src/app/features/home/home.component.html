@@ -13,21 +13,28 @@
                 <p>Fin d'inscription :</p>
                 <p>Elo : entre Y et Y</p>
                 <p>Joueurs : entre X et X</p>
-                <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                @if(isAuthenticated) {
+                    <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                }
+                
             </div>
             <div class="tournament-card">
                 <h4>Tournoi 2</h4>
                 <p>Fin d'inscription :</p>
                 <p>Elo : entre Y et Y</p>
                 <p>Joueurs : entre X et X</p>
-                <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                @if(isAuthenticated) {
+                    <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                }
             </div>
             <div class="tournament-card">
                 <h4>Tournoi 3</h4>
                 <p>Fin d'inscription :</p>
                 <p>Elo : entre Y et Y</p>
                 <p>Joueurs : entre X et X</p>
-                <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                @if(isAuthenticated) {
+                    <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                }
             </div>
         </div>
     </div>

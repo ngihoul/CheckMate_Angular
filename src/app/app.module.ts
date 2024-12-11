@@ -7,13 +7,16 @@ import { SharedModule } from './shared/shared.module';
 import { SignupComponent } from './features/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SigninComponent } from './features/signin/signin.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { InitAccountComponent } from './features/init-account/init-account.component';
+import { tokenInterceptor } from './core/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     SigninComponent,
+    InitAccountComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -24,7 +27,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
   ],
   providers: [
     provideHttpClient(
-      withFetch()
+      withFetch(),
+      withInterceptors([tokenInterceptor]),
     )
   ],
   bootstrap: [AppComponent]

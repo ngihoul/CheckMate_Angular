@@ -11,6 +11,8 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class SigninComponent {
   signInForm: FormGroup;
+  errorMessage: string | undefined = undefined;
+
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.signInForm = this.fb.group({
       usernameOrEmail: ['', Validators.required],
@@ -20,9 +22,10 @@ export class SigninComponent {
 
   onSubmit() {
     console.log(this.signInForm.value);
-    this.authService.login(this.signInForm.value).subscribe(
-      data => console.log(data)
-    )
+    this.authService.login(this.signInForm.value).subscribe({ 
+      next: (token: string) => this.errorMessage = undefined,
+      error: (error: any) => this.errorMessage = "Une erreur est survenue" 
+    });
   }
 
   get usernameOrEmail() {

@@ -5,6 +5,12 @@
         </a>
     </div>
     <div class="account-container">
-        <a routerLink="/signin" class="account">Se connecter</a>
+        @if(!isAuthenticated){
+            <a routerLink="/signin" class="account">Se connecter</a>
+        } @else {
+            <a (click)="logout()" class="account">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        }
     </div>
 </header>
