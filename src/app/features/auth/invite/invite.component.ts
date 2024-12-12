@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Gender } from '../../../core/models/gender.model';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-invite',
@@ -31,7 +32,12 @@ export class InviteComponent {
   ]
 
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService, 
+    private router: Router,
+    private notificationService: NotificationService
+  ){
     this.inviteForm = this.fb.group({
       email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       dateOfBirth: ['', Validators.required],
@@ -44,6 +50,10 @@ export class InviteComponent {
     
     this.authService.invite(this.inviteForm.value).subscribe({
       next: () => { 
+        this.notificationService.set({
+          type: "success",
+          message: "L'invitation a bien été envoyée",
+        }),
         this.router.navigate(['home']),
         this.errorMessage = undefined;
       },

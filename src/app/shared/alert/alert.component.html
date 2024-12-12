@@ -1,0 +1,7 @@
+@if(visible) {
+    <div class="alert alert-{{ notification.type }}">
+        <span class="alert-message">{{ notification.message }}</span>
+        <button class="close-btn" (click)="close()">×</button>
+    </div>
+}
+    

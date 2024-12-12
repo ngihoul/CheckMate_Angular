@@ -24,5 +24,9 @@
             <a class="btn" routerLink="/unregister">Inscription fermée</a>
           }
         </div>
+
+        @if(notification) {
+            <app-alert [notification]="notification"></app-alert>
+        }
     </div>
 }

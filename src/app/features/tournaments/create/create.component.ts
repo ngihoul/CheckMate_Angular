@@ -7,6 +7,7 @@ import { Category } from '../../../core/models/category.model';
 import { CategoryService } from '../../../core/services/category.service';
 import { TournamentService } from '../../../core/services/tournament.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-create',
@@ -26,7 +27,8 @@ export class CreateComponent {
     private fb: FormBuilder, 
     private categoryService: CategoryService, 
     private tournamentService: TournamentService, 
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     this.createTournamentForm =  this.fb.group({
       name: ['', Validators.required],
@@ -63,10 +65,14 @@ export class CreateComponent {
 
     if (this.createTournamentForm.valid) {
       this.tournamentService.create(this.createTournamentForm.value).subscribe({
-        next: () => {
+        next: (tournament) => {
           // TODO : Redirect to /tournois/:id
-          this.router.navigate(['home']),
-          this.errorMessage = undefined;
+          this.notificationService.set({
+            type: "success",
+            message: "Le tournoi a bien été créé",
+          }),
+          this.errorMessage = undefined,
+          this.router.navigate([`detail/${tournament.id}`])
         },
         error: () => this.errorMessage = "Une erreur est survenue"
       })

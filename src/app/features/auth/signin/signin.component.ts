@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { Notification } from '../../../core/models/notification.model';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-signin',
@@ -13,7 +15,11 @@ export class SigninComponent {
   signInForm: FormGroup;
   errorMessage: string | undefined = undefined;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private notificationService: NotificationService
+  ) {
     this.signInForm = this.fb.group({
       usernameOrEmail: ['', Validators.required],
       password: ['', Validators.required]
@@ -22,7 +28,13 @@ export class SigninComponent {
 
   onSubmit() {
     this.authService.login(this.signInForm.value).subscribe({ 
-      next: (token: string) => this.errorMessage = undefined,
+      next: (token: string) => {
+        this.errorMessage = undefined,
+        this.notificationService.set({
+          type: "success", 
+          message: "Vous êtes connecté"
+        })
+      },
       error: (error: any) => this.errorMessage = "Une erreur est survenue" 
     });
   }

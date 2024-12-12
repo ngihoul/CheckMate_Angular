@@ -13,6 +13,9 @@
     @if(tournaments) {
         <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="isAuthenticated"></app-list-tournament>
     }
-    
+
+    @if(notification) {
+        <app-alert [notification]="notification"></app-alert>
+    }
     
 </div>
