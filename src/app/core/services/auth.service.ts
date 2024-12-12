@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { Login } from '../models/login.model';
 import { jwtDecode } from 'jwt-decode';
@@ -16,12 +16,17 @@ import { invitationForm } from '../models/invitationForm.model';
 })
 export class AuthService {
   apiUrl: string;
-  isAuthenticated$: Subject<boolean> = new Subject<boolean>();
-  isAdmin$: Subject<boolean> = new Subject<boolean>();
+  isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAuthenticated);
+  isAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAdmin);
 
   constructor(private http: HttpClient, private router: Router) {
     this.apiUrl = environment.apiUrl;
    }
+
+   initializeAuthState(): void {
+    this.isAuthenticated$.next(this.isAuthenticated);
+    this.isAdmin$.next(this.isAdmin);
+  }
 
   get isAuthenticated(): boolean {
     return localStorage.getItem("token") !== null;
@@ -30,8 +35,12 @@ export class AuthService {
   get isAdmin(): boolean {
     const token = this.getToken();
     const payload = this.getPayload(token);
-
-    return payload.Role === "Admin";
+  
+    if (!payload) {
+      return false;
+    }
+  
+    return payload.Role === 'Admin';
   }
 
    login(credentials: Login): Observable<string> {
@@ -79,14 +88,27 @@ export class AuthService {
   }
 
   getPayload(token: string | null): any {
-    return token ? jwtDecode(token) : null;
+    if (!token) {
+      return null;
+    }
+  
+    try {
+      return jwtDecode(token);
+    } catch (error) {
+      return null;
+    }
   }
 
-  redirectAfterLogin() {
+  redirectAfterLogin(): void {
     const token = this.getToken();
     const payload = this.getPayload(token);
-
-    if(!payload.Username) {
+  
+    if (!payload) {
+      this.router.navigate(['login']);
+      return;
+    }
+  
+    if (!payload.Username) {
       this.router.navigate(['init-compte']);
     } else {
       this.router.navigate(['home']);

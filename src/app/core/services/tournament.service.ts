@@ -12,8 +12,12 @@ export class TournamentService {
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl;
-   }
+  }
 
+  getAll(): Observable<Tournament[]> {
+    return this.http.get<Tournament[]>(`${this.apiUrl}/Tournaments`);
+  }
+  
   create(tournamentForm: TournamentForm): Observable<Tournament> {
     return this.http.post<Tournament>(`${this.apiUrl}/Tournaments`, tournamentForm);
   }

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './layout/header/header.component';
 import { NavBarComponent } from './layout/nav-bar/nav-bar.component';
 import { RouterModule } from '@angular/router';
+import { ListTournamentComponent } from './components/list-tournament/list-tournament.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    NavBarComponent
+    NavBarComponent,
+    ListTournamentComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     HeaderComponent,
-    NavBarComponent
+    NavBarComponent,
+    ListTournamentComponent
   ]
 })
 export class SharedModule { }

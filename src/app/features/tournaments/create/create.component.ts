@@ -64,7 +64,7 @@ export class CreateComponent {
     if (this.createTournamentForm.valid) {
       this.tournamentService.create(this.createTournamentForm.value).subscribe({
         next: () => {
-          // TODO : Redirect to /tournois
+          // TODO : Redirect to /tournois/:id
           this.router.navigate(['home']),
           this.errorMessage = undefined;
         },

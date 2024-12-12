@@ -1,0 +1,22 @@
+@if(tournaments.length > 0){
+    <div class="tournaments">
+        <div class="cards-container">
+            @for(tournament of tournaments; track tournament.id) {
+                <div class="tournament-card">
+                    <h4>{{ tournament.name }}</h4>
+                    <p>Fin d'inscription : {{ tournament.endRegistration }}</p>
+                    <p>Elo : entre {{ tournament.minElo }} et {{ tournament.maxElo }}</p>
+                    <p>Joueurs : entre {{ tournament.minPlayers }} et {{ tournament.maxPlayers }}</p>
+
+                    @if(isAuthenticated && tournament.canRegister && !tournament.isRegistered) {
+                        <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                    }
+
+                    @if(isAuthenticated && tournament.isRegistered) {
+                        <a class="btn" routerLink="/unregister" routerLinkActive="active">Désinscrivez-vous</a>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
