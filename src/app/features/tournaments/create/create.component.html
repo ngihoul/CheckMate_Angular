@@ -1,5 +1,10 @@
 <div class="tournament-create">
     <h2>Créer un tournoi</h2>
+    @if(errorCategories) {
+        <div class="error">
+            Erreur lors du chargement des categories
+        </div>
+    }
 
     <form [formGroup]="createTournamentForm" (ngSubmit)="createTournament()">
         <div class="form-control">
@@ -92,7 +97,7 @@
 
         <div class="form-control">
             <label>Catégories</label>
-            <div id="categoriesIds">
+            <div id="categoriesIds" *ngIf="categories.length > 0">
                 <div *ngFor="let category of categories; let i = index" class="checkbox-group">
                     <input
                         type="checkbox"

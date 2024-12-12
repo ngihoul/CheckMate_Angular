@@ -4,6 +4,9 @@ import { nbPlayersValidator } from '../../../shared/validators/nb-players.direct
 import { eloValidator } from '../../../shared/validators/elo.directive';
 import { endRegistrationValidator } from '../../../shared/validators/end-registration.directive';
 import { Category } from '../../../core/models/category.model';
+import { CategoryService } from '../../../core/services/category.service';
+import { TournamentService } from '../../../core/services/tournament.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -15,14 +18,16 @@ import { Category } from '../../../core/models/category.model';
 export class CreateComponent {
   createTournamentForm: FormGroup;
   errorMessage: string | undefined = undefined;
+  errorCategories: string | undefined = undefined;
 
-  categories: Category[] = [
-    { id: 1, name: 'Junior', rules: '< 18 yo' },
-    { id: 2, name: 'Senior', rules: '>= 18 yo' },
-    { id: 3, name: 'Veteran', rules: '> 60yo' },
-  ]
+  categories: Category[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder, 
+    private categoryService: CategoryService, 
+    private tournamentService: TournamentService, 
+    private router: Router
+  ) {
     this.createTournamentForm =  this.fb.group({
       name: ['', Validators.required],
       place: [''],
@@ -30,31 +35,44 @@ export class CreateComponent {
       maxPlayers: ['', [Validators.required, Validators.min(2), Validators.max(32)]],
       minElo: ['', [Validators.min(0), Validators.max(3000)]],
       maxElo: ['', [Validators.min(0), Validators.max(3000)]],
-      categoriesIds: this.buildCategoriesForm(),
+      categoriesIds: this.fb.array([]),
       womenOnly: [false, Validators.required],
       endRegistration: [''],
     });
 
     this.createTournamentForm.setValidators([nbPlayersValidator, eloValidator, endRegistrationValidator]);
+
+    this.categoryService.getAll().subscribe({
+      next: (categories: Category[]) => {
+        this.categories = categories,
+        this.updateCategoriesForm(),
+        this.errorCategories = undefined;
+      },
+      error: () => this.errorCategories = "Une erreur est survenue"
+    });
   }
 
-  buildCategoriesForm() {
-    const array = this.categories.map(() => this.fb.control(false));
-    return this.fb.array(array);
+  updateCategoriesForm(): void {
+    const categoryControls = this.categories.map(() => this.fb.control(false));
+    const formArray = this.fb.array(categoryControls);
+    this.createTournamentForm.setControl('categoriesIds', formArray);
   }
 
   createTournament(): void {
-    const selectedCategories = this.getSelectedCategories();
-    const formValue = {
-      ...this.createTournamentForm.value,
-      categoriesIds: selectedCategories
-    };
+    this.createTournamentForm.value.categoriesIds = this.getSelectedCategories();
 
-    console.log(formValue);
+    if (this.createTournamentForm.valid) {
+      this.tournamentService.create(this.createTournamentForm.value).subscribe({
+        next: () => {
+          this.router.navigate(['home']),
+          this.errorMessage = undefined;
+        },
+        error: () => this.errorMessage = "Une erreur est survenue"
+      })
+    }
   }
 
   getSelectedCategories(): number[] {
-    // if this.createTournamentForm.value.categoriesIds is empty : select all categories id
     if (this.createTournamentForm.value.categoriesIds.every((isSelected: boolean) => !isSelected)) {
       return this.categories.map(category => category.id);
     }
