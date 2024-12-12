@@ -14,6 +14,10 @@ export class TournamentService {
     this.apiUrl = environment.apiUrl;
   }
 
+  get(id: number): Observable<Tournament> {
+    return this.http.get<Tournament>(`${this.apiUrl}/Tournaments/${id}`);
+  }
+
   getAll(): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(`${this.apiUrl}/Tournaments`);
   }

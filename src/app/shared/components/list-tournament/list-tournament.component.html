@@ -3,18 +3,22 @@
         <div class="cards-container">
             @for(tournament of tournaments; track tournament.id) {
                 <div class="tournament-card">
-                    <h4>{{ tournament.name }}</h4>
-                    <p>Fin d'inscription : {{ tournament.endRegistration }}</p>
-                    <p>Elo : entre {{ tournament.minElo }} et {{ tournament.maxElo }}</p>
-                    <p>Joueurs : entre {{ tournament.minPlayers }} et {{ tournament.maxPlayers }}</p>
+                    <h4><a routerLink="/tournois/detail/{{ tournament.id }}">{{ tournament.name }}</a></h4>
+                    <div class="text">
+                        <p>Fin d'inscription : {{ tournament.endRegistration | date:'dd/MM/yyyy' }}</p>
+                        <p>ELO : {{ tournament.minElo }} - {{ tournament.maxElo }}</p>
+                        <p>Inscrits : {{ tournament.NbPlayers ?? "0" }} / {{ tournament.maxPlayers }}</p>
+                    </div>
 
-                    @if(isAuthenticated && tournament.canRegister && !tournament.isRegistered) {
-                        <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
-                    }
-
-                    @if(isAuthenticated && tournament.isRegistered) {
-                        <a class="btn" routerLink="/unregister" routerLinkActive="active">Désinscrivez-vous</a>
-                    }
+                    <div class="btns">
+                        @if(isAuthenticated && tournament.canRegister && !tournament.isRegistered) {
+                            <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
+                        }
+    
+                        @if(isAuthenticated && tournament.isRegistered) {
+                            <a class="btn" routerLink="/unregister" routerLinkActive="active">Désinscrivez-vous</a>
+                        }
+                    </div>
                 </div>
             }
         </div>

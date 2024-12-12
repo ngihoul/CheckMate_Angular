@@ -1,0 +1,28 @@
+@if(tournament) {
+    <div class="tournament-detail">
+        <h2 class="title">{{ tournament.name }}</h2>
+        <div class="info">
+          <p><strong>Lieu:</strong> {{ tournament.place || 'Non défini' }}</p>
+          <p><strong>Joueurs inscrits:</strong> {{ tournament.NbPlayers || 0 }} / {{ tournament.maxPlayers }}</p>
+          <p><strong>Catégories:</strong></p>
+            @if(tournament.categories && tournament.categories.length) {
+              <ul>
+                @for(category of tournament.categories; track category.id) {
+                    <li>{{ category.name }}</li>
+                }
+              </ul>
+            }
+          <p><strong>Inscription ouverte jusqu'à:</strong> {{ tournament.endRegistration | date:'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+        
+        <div class="buttons">
+          @if(tournament.canRegister && !tournament.isRegistered) {
+            <a class="btn" routerLink="/register">S'inscrire</a>
+          }
+          
+          @if(tournament.isRegistered) {
+            <a class="btn" routerLink="/unregister">Inscription fermée</a>
+          }
+        </div>
+    </div>
+}

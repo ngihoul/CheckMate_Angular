@@ -3,19 +3,29 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.8rem;
+    text-align: center;
 
     .tournament-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         width: calc(33.33% - 0.8rem);
         border: 1px solid var(--color-text);
         border-radius: 4px;
         padding: 1.6rem;
 
-        p {
-            margin: 0.4rem;
+        .text {
+            p {
+                margin: 0.4rem;
+            }
         }
         
-        .btn {
-            margin-top: 1.2rem;
-        }
+        .btns {
+            min-height: 75px;
+
+            .btn {
+                margin-top: 1.2rem;
+            }
+        } 
     }
 }

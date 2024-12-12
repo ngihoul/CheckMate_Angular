@@ -6,13 +6,15 @@ import { TournamentsRoutingModule } from './tournaments-routing.module';
 import { HomeTournamentComponent } from './home-tournament/home-tournament.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
+import { DetailTournamentComponent } from './detail-tournament/detail-tournament.component';
 
 
 
 @NgModule({
   declarations: [
     CreateComponent,
-    HomeTournamentComponent
+    HomeTournamentComponent,
+    DetailTournamentComponent
   ],
   imports: [
     CommonModule,
