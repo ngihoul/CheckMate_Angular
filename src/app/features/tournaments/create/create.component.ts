@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { nbPlayersValidator } from '../../../shared/validators/nb-players.directive';
 import { eloValidator } from '../../../shared/validators/elo.directive';
 import { endRegistrationValidator } from '../../../shared/validators/end-registration.directive';
+import { Category } from '../../../core/models/category.model';
 
 @Component({
   selector: 'app-create',
@@ -29,18 +30,40 @@ export class CreateComponent {
       maxPlayers: ['', [Validators.required, Validators.min(2), Validators.max(32)]],
       minElo: ['', [Validators.min(0), Validators.max(3000)]],
       maxElo: ['', [Validators.min(0), Validators.max(3000)]],
-      categoriesId: this.fb.array([1, 2, 3], Validators.required),
+      categoriesIds: this.buildCategoriesForm(),
       womenOnly: [false, Validators.required],
       endRegistration: [''],
     });
 
     this.createTournamentForm.setValidators([nbPlayersValidator, eloValidator, endRegistrationValidator]);
-    
+  }
+
+  buildCategoriesForm() {
+    const array = this.categories.map(() => this.fb.control(false));
+    return this.fb.array(array);
   }
 
   createTournament(): void {
+    const selectedCategories = this.getSelectedCategories();
+    const formValue = {
+      ...this.createTournamentForm.value,
+      categoriesIds: selectedCategories
+    };
 
+    console.log(formValue);
   }
+
+  getSelectedCategories(): number[] {
+    // if this.createTournamentForm.value.categoriesIds is empty : select all categories id
+    if (this.createTournamentForm.value.categoriesIds.every((isSelected: boolean) => !isSelected)) {
+      return this.categories.map(category => category.id);
+    }
+
+    return this.createTournamentForm.value.categoriesIds
+      .map((isSelected: boolean, index: number) => isSelected ? this.categories[index].id : null)
+      .filter((id: number | null) => id !== null) as number[];
+  }
+  
 
   get name() {
     return this.createTournamentForm.get('name');
@@ -66,10 +89,13 @@ export class CreateComponent {
     return this.createTournamentForm.get('maxElo');
   }
   
-  get categoriesId() {
-    return this.createTournamentForm.get('categoriesId');
+  get categoriesIds() {
+    return this.createTournamentForm.get('categoriesIds') as FormArray;
   }
-  
+
+  getCategoryControl(index: number): FormControl {
+    return this.categoriesIds.at(index) as FormControl;
+  }
 
   get womenOnly() {
     return this.createTournamentForm.get('womenOnly');

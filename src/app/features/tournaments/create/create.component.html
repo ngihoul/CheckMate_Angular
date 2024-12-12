@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-control">
-            <label for="place">Nom</label>
+            <label for="place">Lieu</label>
             <input type="text" id="place" formControlName="place" required>
         </div>
 
@@ -62,11 +62,8 @@
 
         <div class="form-control">
             <label for="minElo">Elo minimum</label>
-            <input type="number" id="minElo" formControlName="minElo" required>
+            <input type="number" id="minElo" formControlName="minElo">
             <div class="error" *ngIf="minElo?.invalid && minElo?.touched">
-                <div *ngIf="minElo?.hasError('required')">
-                    Ce champ est obligatoire.
-                </div>
                 <div *ngIf="minElo?.hasError('min')">
                     L'elo minimum doit être supérieur ou égal à 0.
                 </div>
@@ -78,11 +75,8 @@
 
         <div class="form-control">
             <label for="maxElo">Elo maximum</label>
-            <input type="number" id="maxElo" formControlName="maxElo" required>
+            <input type="number" id="maxElo" formControlName="maxElo">
             <div class="error" *ngIf="maxElo?.invalid && maxElo?.touched">
-                <div *ngIf="maxElo?.hasError('required')">
-                    Ce champ est obligatoire.
-                </div>
                 <div *ngIf="maxElo?.hasError('min')">
                     L'elo maximum doit être supérieur ou égal à 0.
                 </div>
@@ -97,25 +91,26 @@
         </div>
 
         <div class="form-control">
-            <label for="categoriesId">Catégorie</label>
-            <div id="categoriesId">
-                @for(category of categories; track category.id) {
-                    <label>
-                        <input type="checkbox" formArrayName="categoriesId" [value]="category.id">
-                        {{ category.name }}
-                    </label>
-                }
-            </div>
-            <div class="error" *ngIf="categoriesId?.invalid && categoriesId?.touched">
-                <div *ngIf="categoriesId?.hasError('required')">
-                    Ce champ est obligatoire.
+            <label>Catégories</label>
+            <div id="categoriesIds">
+                <div *ngFor="let category of categories; let i = index" class="checkbox-group">
+                    <input
+                        type="checkbox"
+                        [formControl]="getCategoryControl(i)"
+                        [value]="category.id"
+                        id="category-{{ category.id }}"
+                    />
+                    <label for="category-{{ category.id }}">{{ category.name }}</label>
                 </div>
             </div>
+            <!-- TODO : custom validator to check if at least one category is selected -->
         </div>
 
         <div class="form-control">
-            <label for="womenOnly">Tournoi féminin</label>
-            <input type="checkbox" id="womenOnly" formControlName="womenOnly" required>
+            <div class="checkbox-group">
+                <input type="checkbox" id="womenOnly" formControlName="womenOnly">
+                <label for="womenOnly">Tournoi féminin</label>
+            </div>
             <div class="error" *ngIf="womenOnly?.invalid && womenOnly?.touched">
                 <div *ngIf="womenOnly?.hasError('required')">
                     Ce champ est obligatoire.
@@ -134,7 +129,7 @@
         </div>
 
         <div class="form-control">
-            <button type="submit">Créer</button>
+            <button [disabled]="createTournamentForm.invalid" type="submit">Créer</button>
             <div class="error" *ngIf="errorMessage">
                 {{ errorMessage }}
             </div>

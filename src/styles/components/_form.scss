@@ -44,9 +44,70 @@ form {
 }
 
 /* Style pour les checkboxes */
+/* Style pour les checkboxes */
 .form-control input[type="checkbox"] {
-    width: auto;
-    margin-right: 0.5rem;
+    /* Masquer l'input natif tout en conservant l'accessibilité */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-border);
+    border-radius: 4px;
+    background-color: var(--color-bg-light);
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.form-control input[type="checkbox"]:checked {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="white" d="M6.173 12.247l-4.146-4.147 1.414-1.414 2.732 2.732 6.247-6.248 1.414 1.414-7.661 7.663z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px;
+}
+
+.form-control input[type="checkbox"]:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+/* Ajustement pour les labels des checkboxes */
+.form-control label[for]:not(:empty) {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+.form-control input[type="checkbox"]:focus {
+    outline: 2px solid rgba(0, 123, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* Alignement des checkboxes et labels */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    flex-shrink: 0;
+}
+
+.checkbox-group label {
+    flex-grow: 1;
+    color: var(--color-text);
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 0;
 }
 
 .form-control label[for]:not(:empty) {
@@ -79,4 +140,16 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: var(--color-primary);
     color: var(--color-bg-light);
+}
+
+button[type="submit"]:disabled {
+    background-color: var(--color-bg-light-disabled);
+    color: var(--color-text-disabled); 
+    border: 2px solid var(--color-border-disabled); 
+    cursor: not-allowed; 
+}
+
+button[type="submit"]:disabled:hover {
+    background-color: var(--color-bg-light-disabled);
+    color: var(--color-text-disabled);
 }
