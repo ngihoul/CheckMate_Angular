@@ -16,14 +16,23 @@ import { invitationForm } from '../models/invitationForm.model';
 })
 export class AuthService {
   apiUrl: string;
-  get isAuthenticated(): boolean {
-    return localStorage.getItem("token") !== null;
-  }
   isAuthenticated$: Subject<boolean> = new Subject<boolean>();
+  isAdmin$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router) {
     this.apiUrl = environment.apiUrl;
    }
+
+  get isAuthenticated(): boolean {
+    return localStorage.getItem("token") !== null;
+  }
+
+  get isAdmin(): boolean {
+    const token = this.getToken();
+    const payload = this.getPayload(token);
+
+    return payload.Role === "Admin";
+  }
 
    login(credentials: Login): Observable<string> {
     return this.http.post(`${this.apiUrl}/Login`, credentials, { responseType: 'text' }).pipe(
@@ -55,8 +64,8 @@ export class AuthService {
 
   setToken(token: string): void {
     localStorage.setItem('token', token);
- 
     this.isAuthenticated$.next(this.isAuthenticated);
+    this.isAdmin$.next(this.isAdmin);
   }
 
   getToken(): string | null {
@@ -65,8 +74,8 @@ export class AuthService {
 
   removeToken(): void {
     localStorage.removeItem('token');
-
     this.isAuthenticated$.next(this.isAuthenticated);
+    this.isAdmin$.next(this.isAdmin);
   }
 
   getPayload(token: string | null): any {

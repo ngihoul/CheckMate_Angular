@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { samePasswordValidator } from '../../shared/validators/same-password.directive';
-import { AuthService } from '../../core/services/auth.service';
+import { samePasswordValidator } from '../../../shared/validators/same-password.directive';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-init-account',

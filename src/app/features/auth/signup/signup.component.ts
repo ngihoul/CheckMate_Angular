@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { samePasswordValidator } from '../../shared/validators/same-password.directive';
-import { Gender } from '../../core/models/gender.model';
+import { samePasswordValidator } from '../../../shared/validators/same-password.directive';
+import { Gender } from '../../../core/models/gender.model';
 
 @Component({
   selector: 'app-signup',

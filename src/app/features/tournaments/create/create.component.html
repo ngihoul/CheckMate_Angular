@@ -1,0 +1,143 @@
+<div class="tournament-create">
+    <h2>Créer un tournoi</h2>
+
+    <form [formGroup]="createTournamentForm" (ngSubmit)="createTournament()">
+        <div class="form-control">
+            <label for="name">Nom</label>
+            <input type="text" id="name" formControlName="name" required>
+            <div class="error" *ngIf="name?.invalid && name?.touched">
+                <div *ngIf="name?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="name?.hasError('minlength')">
+                    Le nom doit avoir au moins 3 caractères.
+                </div>
+                <div *ngIf="name?.hasError('maxlength')">
+                    Le nom doit avoir au plus 100 caractères.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="place">Nom</label>
+            <input type="text" id="place" formControlName="place" required>
+        </div>
+
+        <div class="form-control">
+            <label for="minPlayers">Nombre de joueurs minimum</label>
+            <input type="number" id="minPlayers" formControlName="minPlayers" required>
+            <div class="error" *ngIf="minPlayers?.invalid && minPlayers?.touched">
+                <div *ngIf="minPlayers?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="minPlayers?.hasError('min')">
+                    Le nombre de joueurs minimum doit être supérieur ou égal à 2.
+                </div>
+                <div *ngIf="minPlayers?.hasError('max')">
+                    Le nombre de joueurs minimum doit être inférieur ou égal à 32.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="maxPlayers">Nombre de joueurs maximum</label>
+            <input type="number" id="maxPlayers" formControlName="maxPlayers" required>
+            <div class="error" *ngIf="maxPlayers?.invalid && maxPlayers?.touched">
+                <div *ngIf="maxPlayers?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="maxPlayers?.hasError('min')">
+                    Le nombre de joueurs maximum doit être supérieur ou égal à 2.
+                </div>
+                <div *ngIf="maxPlayers?.hasError('max')">
+                    Le nombre de joueurs maximum doit être inférieur ou égal à 32.
+                </div>
+            </div>
+            <div class="error" *ngIf="minPlayers?.touched && maxPlayers?.touched">
+                <div *ngIf="createTournamentForm?.hasError('nbPlayers')">
+                    Le nombre de joueurs maximum doit être supérieur ou égal au nombre de joueurs minimum.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="minElo">Elo minimum</label>
+            <input type="number" id="minElo" formControlName="minElo" required>
+            <div class="error" *ngIf="minElo?.invalid && minElo?.touched">
+                <div *ngIf="minElo?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="minElo?.hasError('min')">
+                    L'elo minimum doit être supérieur ou égal à 0.
+                </div>
+                <div *ngIf="minElo?.hasError('max')">
+                    L'elo minimum doit être inférieur ou égal à 3000.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="maxElo">Elo maximum</label>
+            <input type="number" id="maxElo" formControlName="maxElo" required>
+            <div class="error" *ngIf="maxElo?.invalid && maxElo?.touched">
+                <div *ngIf="maxElo?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+                <div *ngIf="maxElo?.hasError('min')">
+                    L'elo maximum doit être supérieur ou égal à 0.
+                </div>
+                <div *ngIf="maxElo?.hasError('max')">
+                    L'elo maximum doit être inférieur ou égal à 3000.
+                </div>
+                
+            </div>
+            <div class="error" *ngIf="createTournamentForm?.hasError('elo')">
+                {{ createTournamentForm.getError('elo') }}
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="categoriesId">Catégorie</label>
+            <div id="categoriesId">
+                @for(category of categories; track category.id) {
+                    <label>
+                        <input type="checkbox" formArrayName="categoriesId" [value]="category.id">
+                        {{ category.name }}
+                    </label>
+                }
+            </div>
+            <div class="error" *ngIf="categoriesId?.invalid && categoriesId?.touched">
+                <div *ngIf="categoriesId?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="womenOnly">Tournoi féminin</label>
+            <input type="checkbox" id="womenOnly" formControlName="womenOnly" required>
+            <div class="error" *ngIf="womenOnly?.invalid && womenOnly?.touched">
+                <div *ngIf="womenOnly?.hasError('required')">
+                    Ce champ est obligatoire.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <label for="endRegistration">Fin des inscriptions</label>
+            <input type="datetime-local" id="endRegistration" formControlName="endRegistration" required>
+            <div class="error" *ngIf="endRegistration?.touched">
+                <div class="error" *ngIf="createTournamentForm?.hasError('endRegistration')">
+                    {{ createTournamentForm.getError('endRegistration') }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-control">
+            <button type="submit">Créer</button>
+            <div class="error" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+        </div>
+    </form>
+</div>

@@ -34,4 +34,15 @@
             </ul>
         </li>
     </ul>
+    @if(isAuthenticated && isAdmin){
+        <ul class="admin-nav">
+            <p class="nav-title">Admin</p>
+            <li>
+                <a routerLink="/tournois/creer" routerLinkActive="active">
+                    <i class="fas fa-plus"></i>
+                    Créer un tournoi
+                </a>
+            </li>
+        </ul>
+    }
 </nav>

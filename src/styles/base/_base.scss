@@ -1,3 +1,8 @@
+
+body {
+    background-color: var(--color-bg-light);
+}
+
 h1, h2, h3, h4 {
     font-family: var(--typo-heading);
 }
@@ -27,5 +32,4 @@ main {
     margin-top: var(--header-height);
     padding: 0.8rem;
     height: calc(100vh - var(--header-height));
-    background-color: var(--color-bg-light);
 }

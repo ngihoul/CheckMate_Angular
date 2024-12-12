@@ -6,7 +6,7 @@
     </div>
     <div class="account-container">
         @if(!isAuthenticated){
-            <a routerLink="/signin" class="signin-btn">Se connecter</a>
+            <a routerLink="/auth/signin" class="signin-btn">Se connecter</a>
         } @else {
             <a (click)="logout()" class="signout-btn">
                 Se déconnecter <i class="fa-solid fa-right-from-bracket"></i>

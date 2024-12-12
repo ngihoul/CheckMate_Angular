@@ -43,6 +43,18 @@ form {
     background: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4L2 0zM2 5L0 3h4l-2 2z"/></svg>') no-repeat right 0.75rem center/8px 10px;
 }
 
+/* Style pour les checkboxes */
+.form-control input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.form-control label[for]:not(:empty) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 /* Style pour les erreurs */
 .error {
     color: var(--color-error);
