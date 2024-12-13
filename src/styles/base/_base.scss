@@ -1,36 +1,51 @@
-
 body {
-    box-sizing: border-box;
-    background-color: var(--color-bg-light);
+  box-sizing: border-box;
+  background-color: var(--color-bg-light);
 }
 
-h1, h2, h3, h4 {
-    font-family: var(--typo-heading);
+h1,
+h2,
+h3,
+h4 {
+  text-align: center;
+  font-family: var(--typo-heading);
 }
 
 h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
+  position: relative;
+  font-size: 2.8rem;
+  margin-bottom: 2rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -1.6rem;
+    left: 37.5%;
+    width: 25%;
+    height: 3px;
+    background-color: var(--color-primary);
+  }
 }
 
 h3 {
-    font-size: 2rem;
-    margin-bottom: 1.6rem;
+  font-size: 2rem;
+  margin-bottom: 1.6rem;
 }
 
 h4 {
-    font-size: 1.5rem;
-    margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 
-p, a {
-    font-family: var(--typo-text);
-    color: var(--color-text);
+p,
+a {
+  font-family: var(--typo-text);
+  color: var(--color-text);
 }
 
 main {
-    margin-left: var(--nav-width);
-    margin-top: var(--header-height);
-    padding: 2.6rem 1.2rem;
-    height: calc(100vh - var(--header-height));
+  margin-left: var(--nav-width);
+  margin-top: var(--header-height);
+  padding: 2.6rem 1.2rem;
+  height: calc(100vh - var(--header-height));
 }

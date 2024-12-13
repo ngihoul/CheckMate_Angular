@@ -5,14 +5,14 @@ import { HomeTournamentComponent } from './home-tournament/home-tournament.compo
 import { DetailTournamentComponent } from './detail-tournament/detail-tournament.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: HomeTournamentComponent },
-    { path: 'detail/:id', component: DetailTournamentComponent },
-    { path: 'creer', component: CreateComponent }, // canActivate: [AuthGuard]
+  // { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', component: HomeTournamentComponent },
+  { path: 'detail/:id', component: DetailTournamentComponent },
+  { path: 'creer', component: CreateComponent }, // canActivate: [AuthGuard]
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TournamentsRoutingModule { }
+export class TournamentsRoutingModule {}

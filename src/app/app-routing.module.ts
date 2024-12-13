@@ -6,15 +6,17 @@ import { InitAccountComponent } from './features/auth/init-account/init-account.
 import { InviteComponent } from './features/auth/invite/invite.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
-  { path: 'auth', loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule) },
-  { path: 'tournois', loadChildren: () => import('./features/tournaments/tournaments.module').then(m => m.TournamentsModule) },
-
+  // { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', component: HomeComponent },
+  { path: 'auth', loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule) },
+  {
+    path: 'tournois',
+    loadChildren: () => import('./features/tournaments/tournaments.module').then((m) => m.TournamentsModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
