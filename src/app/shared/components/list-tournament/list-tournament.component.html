@@ -9,15 +9,7 @@
       <div class="text">
         <p>Fin d'inscription : {{ tournament.endRegistration | date : 'dd/MM/yyyy' }}</p>
         <p>ELO : {{ tournament.minElo }} - {{ tournament.maxElo }}</p>
-        <p>Inscrits : {{ tournament.NbPlayers ?? '0' }} / {{ tournament.maxPlayers }}</p>
-      </div>
-
-      <div class="btns">
-        @if(isAuthenticated && tournament.canRegister && !tournament.isRegistered) {
-        <a class="btn cta" routerLink="/register" routerLinkActive="active">Inscrivez-vous</a>
-        } @if(isAuthenticated && tournament.isRegistered) {
-        <a class="btn" routerLink="/unregister" routerLinkActive="active">Désinscrivez-vous</a>
-        }
+        <p>Inscrits : {{ tournament.nbPlayers }} / {{ tournament.maxPlayers }}</p>
       </div>
     </div>
     }

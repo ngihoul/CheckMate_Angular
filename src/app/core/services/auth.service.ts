@@ -97,6 +97,17 @@ export class AuthService {
     }
   }
 
+  getUserId(): number | null {
+    const token = this.getToken();
+    const payload = this.getPayload(token);
+
+    if (!payload) {
+      return null;
+    }
+
+    return payload.Id;
+  }
+
   redirectAfterLogin(): void {
     const token = this.getToken();
     const payload = this.getPayload(token);
@@ -109,7 +120,7 @@ export class AuthService {
     if (!payload.Username) {
       this.router.navigate(['init-compte']);
     } else {
-      this.router.navigate(['home']);
+      this.router.navigate(['/']);
     }
   }
 }

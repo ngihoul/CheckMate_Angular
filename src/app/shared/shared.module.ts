@@ -5,13 +5,15 @@ import { NavBarComponent } from './layout/nav-bar/nav-bar.component';
 import { RouterModule } from '@angular/router';
 import { ListTournamentComponent } from './components/list-tournament/list-tournament.component';
 import { AlertComponent } from './alert/alert.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     NavBarComponent,
     ListTournamentComponent,
-    AlertComponent
+    AlertComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { AlertComponent } from './alert/alert.component';
     HeaderComponent,
     NavBarComponent,
     ListTournamentComponent,
-    AlertComponent
+    AlertComponent,
+    SpinnerComponent
   ]
 })
 export class SharedModule { }

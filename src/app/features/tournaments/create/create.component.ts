@@ -12,9 +12,9 @@ import { NotificationService } from '../../../core/services/notification.service
 @Component({
   selector: 'app-create',
   standalone: false,
-  
+
   templateUrl: './create.component.html',
-  styles: ``
+  styles: ``,
 })
 export class CreateComponent {
   createTournamentForm: FormGroup;
@@ -24,13 +24,13 @@ export class CreateComponent {
   categories: Category[] = [];
 
   constructor(
-    private fb: FormBuilder, 
-    private categoryService: CategoryService, 
-    private tournamentService: TournamentService, 
+    private fb: FormBuilder,
+    private categoryService: CategoryService,
+    private tournamentService: TournamentService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
-    this.createTournamentForm =  this.fb.group({
+    this.createTournamentForm = this.fb.group({
       name: ['', Validators.required],
       place: [''],
       minPlayers: ['', [Validators.required, Validators.min(2), Validators.max(32)]],
@@ -46,11 +46,9 @@ export class CreateComponent {
 
     this.categoryService.getAll().subscribe({
       next: (categories: Category[]) => {
-        this.categories = categories,
-        this.updateCategoriesForm(),
-        this.errorCategories = undefined;
+        (this.categories = categories), this.updateCategoriesForm(), (this.errorCategories = undefined);
       },
-      error: () => this.errorCategories = "Une erreur est survenue"
+      error: () => (this.errorCategories = 'Une erreur est survenue'),
     });
   }
 
@@ -66,54 +64,52 @@ export class CreateComponent {
     if (this.createTournamentForm.valid) {
       this.tournamentService.create(this.createTournamentForm.value).subscribe({
         next: (tournament) => {
-          // TODO : Redirect to /tournois/:id
           this.notificationService.set({
-            type: "success",
-            message: "Le tournoi a bien été créé",
+            type: 'success',
+            message: 'Le tournoi a bien été créé',
           }),
-          this.errorMessage = undefined,
-          this.router.navigate([`detail/${tournament.id}`])
+            (this.errorMessage = undefined),
+            this.router.navigate([`detail/${tournament.id}`]);
         },
-        error: () => this.errorMessage = "Une erreur est survenue"
-      })
+        error: () => (this.errorMessage = 'Une erreur est survenue'),
+      });
     }
   }
 
   getSelectedCategories(): number[] {
     if (this.createTournamentForm.value.categoriesIds.every((isSelected: boolean) => !isSelected)) {
-      return this.categories.map(category => category.id);
+      return this.categories.map((category) => category.id);
     }
 
     return this.createTournamentForm.value.categoriesIds
-      .map((isSelected: boolean, index: number) => isSelected ? this.categories[index].id : null)
+      .map((isSelected: boolean, index: number) => (isSelected ? this.categories[index].id : null))
       .filter((id: number | null) => id !== null) as number[];
   }
-  
 
   get name() {
     return this.createTournamentForm.get('name');
   }
-  
+
   get place() {
     return this.createTournamentForm.get('place');
   }
-  
+
   get minPlayers() {
     return this.createTournamentForm.get('minPlayers');
   }
-  
+
   get maxPlayers() {
     return this.createTournamentForm.get('maxPlayers');
   }
-  
+
   get minElo() {
     return this.createTournamentForm.get('minElo');
   }
-  
+
   get maxElo() {
     return this.createTournamentForm.get('maxElo');
   }
-  
+
   get categoriesIds() {
     return this.createTournamentForm.get('categoriesIds') as FormArray;
   }
@@ -125,7 +121,7 @@ export class CreateComponent {
   get womenOnly() {
     return this.createTournamentForm.get('womenOnly');
   }
-  
+
   get endRegistration() {
     return this.createTournamentForm.get('endRegistration');
   }

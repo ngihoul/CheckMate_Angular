@@ -5,24 +5,24 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   standalone: false,
-  
+
   templateUrl: './header.component.html',
-  styles: ``
+  styles: ``,
 })
 export class HeaderComponent {
   isAuthenticated!: boolean;
-  username: string = "";
+  username: string = '';
 
   constructor(private authService: AuthService, private router: Router) {
     this.isAuthenticated = this.authService.isAuthenticated;
-    
+
     this.authService.isAuthenticated$.subscribe({
-      next: (data: boolean) => this.isAuthenticated = data
+      next: (data: boolean) => (this.isAuthenticated = data),
     });
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['home']);
+    this.router.navigate(['']);
   }
 }

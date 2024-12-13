@@ -9,56 +9,51 @@ import { NotificationService } from '../../../core/services/notification.service
   selector: 'app-invite',
   standalone: false,
   templateUrl: './invite.component.html',
-  styles: ``
+  styles: ``,
 })
-
 export class InviteComponent {
-
-  inviteForm : FormGroup;
-  errorMessage : string | undefined = undefined;
-  genderChoices : Gender[] = [
+  inviteForm: FormGroup;
+  errorMessage: string | undefined = undefined;
+  genderChoices: Gender[] = [
     {
-      label: "Homme",
-      value: "M"
+      label: 'Homme',
+      value: 'M',
     },
     {
-      label: "Femme",
-      value: "F"
+      label: 'Femme',
+      value: 'F',
     },
     {
-      label: "Autre",
-      value: "O"
+      label: 'Autre',
+      value: 'O',
     },
-  ]
-
+  ];
 
   constructor(
-    private fb: FormBuilder, 
-    private authService: AuthService, 
+    private fb: FormBuilder,
+    private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService
-  ){
+    private notificationService: NotificationService,
+  ) {
     this.inviteForm = this.fb.group({
       email: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       dateOfBirth: ['', Validators.required],
-      gender: ['', [Validators.required, Validators.pattern('^[MFO]$')]]
+      gender: ['', [Validators.required, Validators.pattern('^[MFO]$')]],
     });
   }
 
   onSubmit() {
-    console.log(this.inviteForm.value);
-    
     this.authService.invite(this.inviteForm.value).subscribe({
-      next: () => { 
+      next: () => {
         this.notificationService.set({
-          type: "success",
+          type: 'success',
           message: "L'invitation a bien été envoyée",
         }),
-        this.router.navigate(['home']),
-        this.errorMessage = undefined;
+          this.router.navigate(['']),
+          (this.errorMessage = undefined);
       },
-      error: () => this.errorMessage = "Une erreur est survenue"
-    })
+      error: () => (this.errorMessage = 'Une erreur est survenue'),
+    });
   }
 
   get email() {

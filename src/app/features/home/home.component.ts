@@ -1,34 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { Tournament } from '../../core/models/tournament.model';
 import { TournamentService } from '../../core/services/tournament.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { Notification } from '../../core/models/notification.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: false,
-  
+
   templateUrl: './home.component.html',
-  styles: ``
+  styles: ``,
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
   tournaments: Tournament[] = [];
   notification!: Notification | null;
+  notification$: Subscription;
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private tournamentService: TournamentService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
   ) {
     this.isAuthenticated = this.authService.isAuthenticated;
-    this.authService.isAuthenticated$.subscribe(data => this.isAuthenticated = data);
+    this.authService.isAuthenticated$.subscribe((data) => (this.isAuthenticated = data));
 
-    this.tournamentService.getAll().subscribe(data => this.tournaments = data);
+    this.tournamentService.getAll().subscribe((data) => (this.tournaments = data));
+
+    this.notification$ = this.notificationService.message$.subscribe((notification) => (this.notification = notification));
   }
 
   ngOnInit(): void {
-    this.notification = this.notificationService.get();
+  }
+
+  ngOnDestroy(): void {
+    this.notification$.unsubscribe();
   }
 }

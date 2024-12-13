@@ -4,7 +4,7 @@ export interface Tournament {
     id: number,
     name: string,
     place?: string,
-    NbPlayers?: number,
+    nbPlayers?: number,
     minPlayers: number,
     maxPlayers: number,
     categories?: Category[],

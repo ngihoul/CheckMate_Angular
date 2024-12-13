@@ -42,7 +42,7 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    console.log(this.signUpForm.value);
+    
   }
 
   get username() {

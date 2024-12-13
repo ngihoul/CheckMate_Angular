@@ -1,21 +1,16 @@
 <div class="home">
+  <h2>CheckMate</h2>
 
-    <h2>CheckMate</h2>
-
-    @if(isAuthenticated) {
-        <div class="hero">
-            <h3>Agrandissons la communauté</h3>
-            <p>Invite ta famille, tes amis, tes connaissances, tes collègues, etc. et agrandissons ensemble la communauté.</p>
-            <p>Comme on dit : plus on est de fous, plus on rit</p>
-            <a routerLink="/auth/invite" class="btn cta" >Invitez</a>
-        </div> 
-    }
-    @if(tournaments) {
-        <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="isAuthenticated"></app-list-tournament>
-    }
-
-    @if(notification) {
-        <app-alert [notification]="notification"></app-alert>
-    }
-    
+  @if(isAuthenticated) {
+  <div class="hero">
+    <h3>Agrandissons la communauté</h3>
+    <p>Invite ta famille, tes amis, tes connaissances, tes collègues, etc. et agrandissons ensemble la communauté.</p>
+    <p>Comme on dit : plus on est de fous, plus on rit</p>
+    <a routerLink="/auth/invite" class="btn cta">Invitez</a>
+  </div>
+  } @if(tournaments) {
+  <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="isAuthenticated"></app-list-tournament>
+  } @if(notification) {
+  <app-alert [notification]="notification"></app-alert>
+  }
 </div>
