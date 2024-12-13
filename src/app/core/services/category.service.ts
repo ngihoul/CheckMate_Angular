@@ -5,16 +5,16 @@ import { Category } from '../models/category.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
   apiUrl: string;
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl;
-   }
+  }
 
-  getAll() : Observable<Category[]> {
+  getAll(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this.apiUrl}/TournamentCategories`);
   }
 }

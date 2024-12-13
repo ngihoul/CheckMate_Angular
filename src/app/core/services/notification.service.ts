@@ -3,23 +3,23 @@ import { Subject } from 'rxjs';
 import { Notification } from '../models/notification.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
   message!: Notification | null;
 
-  constructor() { }
+  constructor() {}
 
-  set(message: Notification): void { 
+  set(message: Notification): void {
     this.message = message;
   }
 
   get(): Notification | null {
-    if(!this.message) {
+    if (!this.message) {
       return null;
     }
 
-    return this.message
+    return this.message;
   }
 
   clear(): void {

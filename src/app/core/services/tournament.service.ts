@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Tournament, TournamentForm } from '../models/tournament.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TournamentService {
   apiUrl: string;
@@ -21,7 +21,7 @@ export class TournamentService {
   getAll(): Observable<Tournament[]> {
     return this.http.get<Tournament[]>(`${this.apiUrl}/Tournaments`);
   }
-  
+
   create(tournamentForm: TournamentForm): Observable<Tournament> {
     return this.http.post<Tournament>(`${this.apiUrl}/Tournaments`, tournamentForm);
   }
