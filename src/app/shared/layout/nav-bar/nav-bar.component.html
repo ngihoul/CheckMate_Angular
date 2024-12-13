@@ -1,54 +1,55 @@
 <nav class="main-nav">
-    <ul>
+  <ul>
+    <li>
+      <a routerLink="/" routerLinkActive="active">
+        <i class="fas fa-home"></i>
+        Accueil
+      </a>
+    </li>
+    <li>
+      <a routerLink="/tournois" routerLinkActive="active">
+        <i class="fas fa-chess"></i>
+        Tournois
+      </a>
+      <ul>
         <li>
-            <a routerLink="/" routerLinkActive="active">
-                <i class="fas fa-home"></i>
-                Accueil
-            </a>
+          <a routerLink="/tournois/ouverts" routerLinkActive="active">
+            <i class="fas fa-door-open"></i>
+            Ouverts
+          </a>
         </li>
         <li>
-            <a routerLink="/tournois" routerLinkActive="active">
-                <i class="fas fa-chess"></i>
-                Tournois
-            </a>
-            <ul>
-                <li>
-                    <a routerLink="/tournois/ouverts" routerLinkActive="active">
-                        <i class="fas fa-door-open"></i>
-                        Ouverts
-                    </a>
-                </li>
-                <li>
-                    
-                    <a routerLink="/tournois/en-cours" routerLinkActive="active">
-                        <i class="fas fa-play-circle"></i>
-                        En cours
-                    </a>
-                </li>
-                <li>
-                    <a routerLink="/tournois/termines" routerLinkActive="active">
-                        <i class="fas fa-flag-checkered"></i>
-                        Terminés
-                    </a>
-                </li>
-            </ul>
+          <a routerLink="/tournois/en-cours" routerLinkActive="active">
+            <i class="fas fa-play-circle"></i>
+            En cours
+          </a>
         </li>
         <li>
-            <a routerLink="/invite" routerLinkActive="active">
-                <i class="fas fa-user-friends"></i>
-                Inviter un ami
-            </a>
+          <a routerLink="/tournois/termines" routerLinkActive="active">
+            <i class="fas fa-flag-checkered"></i>
+            Terminés
+          </a>
         </li>
-    </ul>
-    @if(isAuthenticated && isAdmin){
-        <ul class="admin-nav">
-            <p class="nav-title">Admin</p>
-            <li>
-                <a routerLink="/tournois/creer" routerLinkActive="active">
-                    <i class="fas fa-plus"></i>
-                    Créer un tournoi
-                </a>
-            </li>
-        </ul>
+      </ul>
+    </li>
+    @if(isAuthenticated) {
+    <li>
+      <a routerLink="/invite" routerLinkActive="active">
+        <i class="fas fa-user-friends"></i>
+        Inviter un ami
+      </a>
+    </li>
     }
+  </ul>
+  @if(isAuthenticated && isAdmin){
+  <ul class="admin-nav">
+    <p class="nav-title">Admin</p>
+    <li>
+      <a routerLink="/tournois/creer" routerLinkActive="active">
+        <i class="fas fa-plus"></i>
+        Créer un tournoi
+      </a>
+    </li>
+  </ul>
+  }
 </nav>
