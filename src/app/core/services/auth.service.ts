@@ -12,7 +12,7 @@ import { invitationForm } from '../models/invitationForm.model';
 // TODO : create a token service
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   apiUrl: string;
@@ -21,36 +21,34 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     this.apiUrl = environment.apiUrl;
-   }
+  }
 
-   initializeAuthState(): void {
+  initializeAuthState(): void {
     this.isAuthenticated$.next(this.isAuthenticated);
     this.isAdmin$.next(this.isAdmin);
   }
 
   get isAuthenticated(): boolean {
-    return localStorage.getItem("token") !== null;
+    return localStorage.getItem('token') !== null;
   }
 
   get isAdmin(): boolean {
     const token = this.getToken();
     const payload = this.getPayload(token);
-  
+
     if (!payload) {
       return false;
     }
-  
+
     return payload.Role === 'Admin';
   }
 
-   login(credentials: Login): Observable<string> {
+  login(credentials: Login): Observable<string> {
     return this.http.post(`${this.apiUrl}/Login`, credentials, { responseType: 'text' }).pipe(
-      tap(
-        (token: string) => {
-          this.setToken(token);
-          this.redirectAfterLogin();
-        }
-      )
+      tap((token: string) => {
+        this.setToken(token);
+        this.redirectAfterLogin();
+      }),
     );
   }
 
@@ -62,8 +60,8 @@ export class AuthService {
     return this.http.patch<User>(`${this.apiUrl}/init-account/${userId}`, credentials).pipe(
       tap((user: User) => {
         // Refresh token
-        this.login({usernameOrEmail: credentials.username, password: credentials.password} as Login).subscribe();
-      })
+        this.login({ usernameOrEmail: credentials.username, password: credentials.password } as Login).subscribe();
+      }),
     );
   }
 
@@ -78,7 +76,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-      return localStorage.getItem('token');
+    return localStorage.getItem('token');
   }
 
   removeToken(): void {
@@ -91,7 +89,7 @@ export class AuthService {
     if (!token) {
       return null;
     }
-  
+
     try {
       return jwtDecode(token);
     } catch (error) {
@@ -102,12 +100,12 @@ export class AuthService {
   redirectAfterLogin(): void {
     const token = this.getToken();
     const payload = this.getPayload(token);
-  
+
     if (!payload) {
       this.router.navigate(['login']);
       return;
     }
-  
+
     if (!payload.Username) {
       this.router.navigate(['init-compte']);
     } else {
@@ -115,4 +113,3 @@ export class AuthService {
     }
   }
 }
-
