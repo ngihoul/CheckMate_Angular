@@ -15,12 +15,15 @@
       <p><strong>Inscription ouverte jusqu'à:</strong> 
         @if(tournament.endRegistration > today) {
           Inscription terminée
-        } @else if(tournament.nbPlayers) {
-          @if(tournament.maxPlayers <= tournament.nbPlayers) {
-            Tournoi complet
+        } 
+        @else {
+          @if(tournament.nbPlayers) {
+            @if(tournament.maxPlayers <= tournament.nbPlayers) {
+              Tournoi complet
+            } @else {
+              {{ tournament.endRegistration | date : 'dd/MM/yyyy HH:mm' }}
+            }
           }
-        } @else {
-          {{ tournament.endRegistration | date : 'dd/MM/yyyy HH:mm' }}
         }
       </p>
     </div>
