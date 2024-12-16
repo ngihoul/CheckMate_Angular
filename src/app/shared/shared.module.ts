@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { ListTournamentComponent } from './components/list-tournament/list-tournament.component';
 import { AlertComponent } from './alert/alert.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ListPlayerComponent } from './components/list-player/list-player.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     NavBarComponent,
     ListTournamentComponent,
     AlertComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ListPlayerComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     NavBarComponent,
     ListTournamentComponent,
     AlertComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ListPlayerComponent
   ]
 })
 export class SharedModule { }

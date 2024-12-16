@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            <th>Nom d'utilisateur</th>
+            <th>ELO</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(player of players; track player.id) {
+        <tr>
+            <td>{{ player.username }}</td>
+            <td>{{ player.elo }}</td>
+            <td>{{ player.dateOfBirth | date:'dd-MM-yyyy' }}</td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -44,6 +44,14 @@ export class TournamentService {
     return this.http.post<Tournament>(`${this.apiUrl}/Tournaments/${tournamentId}/register/${userId}`, {})
   }
 
+  unregister(tournamentId: number, userId: number){
+    return this.http.post<Tournament>(`${this.apiUrl}/Tournaments/${tournamentId}/unregister/${userId}`, {})
+  }
+
+  start(tournamentId: number) {
+    return this.http.post<Tournament>(`${this.apiUrl}/Tournaments/${tournamentId}/start`, {})
+  }
+
   createParams(filters: TournamentFilters): HttpParams {
     let params = new HttpParams();
 

@@ -1,4 +1,6 @@
 import { Category } from "./category.model"
+import { Game } from "./game.model"
+import { User } from "./user.model"
 
 export interface Tournament {
     id: number,
@@ -14,7 +16,9 @@ export interface Tournament {
     currentRound?: number,
     endRegistration: Date,
     canRegister: boolean,
-    isRegistered: boolean
+    isRegistered: boolean,
+    players?: User[],
+    games: Game[]
 }
 
 export interface TournamentForm {

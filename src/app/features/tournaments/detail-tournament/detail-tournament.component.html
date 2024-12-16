@@ -1,38 +1,62 @@
 @if(tournament) {
-<div class="tournament-detail">
-  <h2 class="title">{{ tournament.name }}</h2>
-  <div class="info">
-    <p><strong>Lieu:</strong> {{ tournament.place || 'Non défini' }}</p>
-    <p><strong>Joueurs inscrits:</strong> {{ tournament.nbPlayers || 0 }} / {{ tournament.maxPlayers }}</p>
-    <p><strong>Catégories:</strong></p>
-    @if(tournament.categories && tournament.categories.length) {
-    <ul>
-      @for(category of tournament.categories; track category.id) {
-      <li>{{ category.name }}</li>
+  <div class="tournament-detail">
+    <h2 class="title">{{ tournament.name }}</h2>
+    <div class="info">
+      <p><strong>Lieu:</strong> {{ tournament.place || 'Non défini' }}</p>
+      <p><strong>Joueurs inscrits:</strong> {{ tournament.nbPlayers || 0 }} / {{ tournament.maxPlayers }}</p>
+      <p><strong>Catégories:</strong></p>
+      @if(tournament.categories && tournament.categories.length) {
+      <ul>
+        @for(category of tournament.categories; track category.id) {
+        <li>{{ category.name }}</li>
+        }
+      </ul>
       }
-    </ul>
+      <p><strong>Inscription ouverte jusqu'à:</strong> {{ tournament.endRegistration | date : 'dd/MM/yyyy HH:mm' }}</p>
+    </div>
+
+    @if(!isStarted) {
+      <div class="players">
+        @if(tournament.players && tournament.players.length) {
+          <h3>Joueurs inscrits</h3>
+          <app-list-player [players]="tournament.players"></app-list-player>
+        }
+      </div>
+      
+      <div class="buttons">
+        @if(tournament.canRegister && !tournament.isRegistered && !isBtnLoading) {
+          <a class="btn" (click)="register()">S'inscrire</a>
+        } @else if(!tournament.isRegistered) {
+          <p>Inscription impossible</p>
+        }
+    
+        @if(tournament.isRegistered && !isBtnLoading) {
+          <a class="btn" (click)="unregister()">Se désinscrire</a>
+        }
+    
+        @if(isBtnLoading) {
+          <app-spinner></app-spinner>
+        }
+    
+        @if(tournament.minPlayers && tournament.nbPlayers) {
+          @if(isAdmin && tournament.endRegistration <= today && tournament.minPlayers >= tournament.nbPlayers) {
+            <a class="btn" (click)="startTournament()">Démarrer le tournoi</a>
+          }
+        }
+      </div>
+    
+      @if(notification) {
+        <app-alert [notification]="notification"></app-alert>
+      }
+    } @else {
+      <div class="nav-round">
+        <ul>
+          <li class="ranking">Classement</li>
+          @for(item of fakeArray; track $index) {
+            <li>Round {{ $index + 1 }}</li>
+          }
+        </ul>
+      </div>
     }
-    <p><strong>Inscription ouverte jusqu'à:</strong> {{ tournament.endRegistration | date : 'dd/MM/yyyy HH:mm' }}</p>
   </div>
-
-  <div class="buttons">
-    @if(tournament.canRegister && !tournament.isRegistered && !isLoading) {
-      <a class="btn" (click)="register()">S'inscrire</a>
-    } @else if(!tournament.isRegistered) {
-      <p>Inscription impossible</p>
-    }
-
-    @if(tournament.isRegistered && !isLoading) {
-      <a class="btn" routerLink="/unregister">Se désinscrire</a>
-    }
-
-    @if(isLoading) {
-      <app-spinner></app-spinner>
-    }
-  </div>
-
-  @if(notification) {
-    <app-alert [notification]="notification"></app-alert>
-  }
-</div>
 }

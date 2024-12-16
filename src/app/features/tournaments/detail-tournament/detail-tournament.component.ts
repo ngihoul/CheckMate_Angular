@@ -16,11 +16,24 @@ import { Subscription } from 'rxjs';
 })
 export class DetailTournamentComponent implements OnInit, OnDestroy {
   id: number;
+  userId: number | null;
+
   tournament!: Tournament;
+
   notification!: Notification | null;
   notification$: Subscription;
   errorMessage: string = '';
-  isLoading: boolean = false;
+
+  isBtnLoading: boolean = false;
+  isPageLoading: boolean = false;
+
+  isAdmin: boolean = false;
+  today: Date = new Date();
+
+  nbRound: number = 0;
+  fakeArray: number[] = []
+
+  isStarted!: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +42,18 @@ export class DetailTournamentComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) {
     this.id = this.route.snapshot.params['id'];
-    this.tournamentService.get(this.id).subscribe((data) => (this.tournament = data));
+    this.userId = this.authService.getUserId();
+
+    this.authService.isAdmin$.subscribe((data) => (this.isAdmin = data));
+
+    this.tournamentService.get(this.id).subscribe((data) => {
+      this.tournament = data,
+      this.isStarted = this.tournament.status === 2;
+      this.nbRound = Math.max(...this.tournament.games.map(game => game.round));
+      this.fakeArray = Array(this.nbRound).fill(0);
+      
+
+    });
 
     this.notification$ = this.notificationService.message$.subscribe((notification) => this.notification = notification);
   }
@@ -38,34 +62,90 @@ export class DetailTournamentComponent implements OnInit, OnDestroy {
   }
 
   register() {
-    this.isLoading = true;
+    this.isBtnLoading = true;
 
-    const userId = this.authService.getUserId();
-
-    if (!userId) {
+    if (!this.userId) {
       this.errorMessage = 'Vous devez être connecté pour vous inscrire à un tournoi';
       this.notificationService.set({ type: 'error', message: this.errorMessage });
 
       return;
     }
 
-    return this.tournamentService.register(this.id, userId).subscribe({
+    return this.tournamentService.register(this.id, this.userId).subscribe({
       next: () => {
         this.notificationService.set({
           type: 'success',
           message: 'Vous êtes inscrit au tournoi',
         }),
+
         this.tournamentService.get(this.id).subscribe((data) => (this.tournament = data));
       },
       error: (error: any) => {
-        this.errorMessage = error.error;
+        this.errorMessage = error.error || 'Une erreur est survenue';
         this.notificationService.set({
           type: 'error',
           message: this.errorMessage,
         }),
-        this.isLoading = false
+
+        this.isBtnLoading = false
       },
-      complete: () => (this.isLoading = false),
+      complete: () => (this.isBtnLoading = false),
+    });
+  }
+
+  unregister() {
+    this.isBtnLoading = true;
+
+    if (!this.userId) {
+      this.errorMessage = 'Vous devez être connecté pour vous inscrire à un tournoi';
+      this.notificationService.set({ type: 'error', message: this.errorMessage });
+
+      return;
+    }
+
+    return this.tournamentService.unregister(this.id, this.userId).subscribe({
+      next: () => {
+        this.notificationService.set({
+          type: 'success',
+          message: 'Vous êtes désinscrit du tournoi',
+        }),
+
+        this.tournamentService.get(this.id).subscribe((data) => (this.tournament = data));
+      },
+      error: (error: any) => {
+        this.errorMessage = error.error || 'Une erreur est survenue';
+        this.notificationService.set({
+          type: 'error',
+          message: this.errorMessage,
+        }),
+
+        this.isBtnLoading = false
+      },
+      complete: () => (this.isBtnLoading = false),
+    });
+  }
+
+  startTournament() {
+    this.isPageLoading = true;
+
+    this.tournamentService.start(this.id).subscribe({
+      next: () => {
+        this.notificationService.set({
+          type: 'success',
+          message: 'Le tournoi a commencé',
+        }),
+
+        this.tournamentService.get(this.id).subscribe((data) => (this.tournament = data));
+      },
+      error: (error: any) => {
+        this.errorMessage = error.error || 'Une erreur est survenue';
+        this.notificationService.set({
+          type: 'error',
+          message: this.errorMessage,
+        }),
+
+        this.isPageLoading = false
+      }
     });
   }
 
