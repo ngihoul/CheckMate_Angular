@@ -12,7 +12,37 @@
         }
       </ul>
       }
-      <p><strong>Inscription ouverte jusqu'à:</strong> {{ tournament.endRegistration | date : 'dd/MM/yyyy HH:mm' }}</p>
+      <p><strong>Inscription ouverte jusqu'à:</strong> 
+        @if(tournament.endRegistration > today) {
+          Inscription terminée
+        } @else if(tournament.nbPlayers) {
+          @if(tournament.maxPlayers <= tournament.nbPlayers) {
+            Tournoi complet
+          }
+        } @else {
+          {{ tournament.endRegistration | date : 'dd/MM/yyyy HH:mm' }}
+        }
+      </p>
+    </div>
+
+    <div class="buttons">
+      @if(tournament.canRegister && !tournament.isRegistered && !isBtnLoading) {
+        <a class="btn" (click)="register()">S'inscrire</a>
+      }
+  
+      @if(tournament.isRegistered && !isBtnLoading) {
+        <a class="btn" (click)="unregister()">Se désinscrire</a>
+      }
+  
+      @if(isBtnLoading) {
+        <app-spinner></app-spinner>
+      }
+  
+      @if(tournament.minPlayers && tournament.nbPlayers) {
+        @if(isAdmin && tournament.endRegistration <= today && tournament.minPlayers >= tournament.nbPlayers) {
+          <a class="btn" (click)="startTournament()">Démarrer le tournoi</a>
+        }
+      }
     </div>
 
     @if(!isStarted) {
@@ -22,32 +52,6 @@
           <app-list-player [players]="tournament.players"></app-list-player>
         }
       </div>
-      
-      <div class="buttons">
-        @if(tournament.canRegister && !tournament.isRegistered && !isBtnLoading) {
-          <a class="btn" (click)="register()">S'inscrire</a>
-        } @else if(!tournament.isRegistered) {
-          <p>Inscription impossible</p>
-        }
-    
-        @if(tournament.isRegistered && !isBtnLoading) {
-          <a class="btn" (click)="unregister()">Se désinscrire</a>
-        }
-    
-        @if(isBtnLoading) {
-          <app-spinner></app-spinner>
-        }
-    
-        @if(tournament.minPlayers && tournament.nbPlayers) {
-          @if(isAdmin && tournament.endRegistration <= today && tournament.minPlayers >= tournament.nbPlayers) {
-            <a class="btn" (click)="startTournament()">Démarrer le tournoi</a>
-          }
-        }
-      </div>
-    
-      @if(notification) {
-        <app-alert [notification]="notification"></app-alert>
-      }
     } @else {
       <div class="nav-round">
         <ul>

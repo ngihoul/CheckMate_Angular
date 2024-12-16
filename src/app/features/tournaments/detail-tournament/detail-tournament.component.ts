@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TournamentService } from '../../../core/services/tournament.service';
-import { Tournament } from '../../../core/models/tournament.model';
+import { Tournament, TournamentStatus } from '../../../core/models/tournament.model';
 import { Notification } from '../../../core/models/notification.model';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-detail-tournament',
@@ -14,14 +13,13 @@ import { Subscription } from 'rxjs';
   templateUrl: './detail-tournament.component.html',
   styles: ``,
 })
-export class DetailTournamentComponent implements OnInit, OnDestroy {
+export class DetailTournamentComponent {
   id: number;
   userId: number | null;
 
   tournament!: Tournament;
 
   notification!: Notification | null;
-  notification$: Subscription;
   errorMessage: string = '';
 
   isBtnLoading: boolean = false;
@@ -48,17 +46,10 @@ export class DetailTournamentComponent implements OnInit, OnDestroy {
 
     this.tournamentService.get(this.id).subscribe((data) => {
       this.tournament = data,
-      this.isStarted = this.tournament.status === 2;
+      this.isStarted = this.tournament.status === TournamentStatus.onGoing;
       this.nbRound = Math.max(...this.tournament.games.map(game => game.round));
       this.fakeArray = Array(this.nbRound).fill(0);
-      
-
     });
-
-    this.notification$ = this.notificationService.message$.subscribe((notification) => this.notification = notification);
-  }
-
-  ngOnInit(): void {
   }
 
   register() {
@@ -147,9 +138,5 @@ export class DetailTournamentComponent implements OnInit, OnDestroy {
         this.isPageLoading = false
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.notification$.unsubscribe();
   }
 }

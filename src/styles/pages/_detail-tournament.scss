@@ -1,0 +1,49 @@
+.tournament-detail {
+    background-color: var(--color-bg-light);
+    padding: 1.5rem;
+    margin: 2rem 0;
+    font-family: var(--typo-text);
+
+    .title {
+        font-family: var(--typo-heading);
+        font-size: 1.75rem;
+        color: var(--color-bg-dark);
+        margin-bottom: 1rem;
+    }
+
+    .info {
+        font-size: 1rem;
+        color: var(--color-text);
+        margin-top: 4rem;
+        
+        p {
+        margin-bottom: 0.75rem;
+
+        strong {
+            font-weight: 800;
+        }
+        }
+
+        ul {
+        padding-left: 1.25rem;
+        list-style-type: disc;
+        margin-bottom: 1rem;
+
+        li {
+            font-size: 1rem;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+        }
+        }
+    }
+
+    .info p:last-child {
+        font-style: italic;
+        color: var(--color-secondary);
+    }
+
+    .players {
+        margin: 4rem 0;
+    }
+}
+  
