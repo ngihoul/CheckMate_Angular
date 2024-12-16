@@ -1,5 +1,8 @@
 <app-header />
 <app-nav-bar />
 <main>
+  @if(notification) {
+    <app-alert [notification]="notification"></app-alert>
+  }
   <router-outlet></router-outlet>
 </main>

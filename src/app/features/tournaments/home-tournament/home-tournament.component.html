@@ -1,11 +1,7 @@
 <div class="tournament-home">
-    <h2>Tous nos tournois</h2>
-    <!-- TODO : Système de filtrage ! -->
-     @if(tournaments) {
-        <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="isAuthenticated"></app-list-tournament>
-     }
-
-     @if(notification) {
-        <app-alert [notification]="notification"></app-alert>
-     }
+   <h2>Tous nos tournois</h2>
+   <!-- TODO : Système de filtrage ! -->
+   @if(tournaments) {
+      <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="isAuthenticated"></app-list-tournament>
+   }
 </div>
