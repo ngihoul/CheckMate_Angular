@@ -32,3 +32,9 @@ export interface TournamentForm {
     womenOnly: boolean,
     endRegistration: Date,
 }
+
+export enum TournamentStatus {
+    waitingPlayers = 1,
+    onGoing = 2,
+    Terminated = 3
+}
