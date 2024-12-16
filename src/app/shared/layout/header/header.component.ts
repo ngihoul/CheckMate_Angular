@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
+import { Notification } from '../../../core/models/notification.model';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +15,13 @@ export class HeaderComponent {
   isAuthenticated!: boolean;
   username: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {
+  notification: Notification | null = null;
+
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private notificationService: NotificationService 
+  ) {
     this.isAuthenticated = this.authService.isAuthenticated;
 
     this.authService.isAuthenticated$.subscribe({
@@ -23,6 +31,10 @@ export class HeaderComponent {
 
   logout(): void {
     this.authService.logout();
+    this.notificationService.set({
+      type: 'success',
+      message: 'Vous êtes déconnecté',
+    })
     this.router.navigate(['']);
   }
 }
