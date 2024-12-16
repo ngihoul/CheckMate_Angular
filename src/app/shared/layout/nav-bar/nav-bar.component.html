@@ -1,13 +1,13 @@
 <nav class="main-nav">
   <ul>
     <li>
-      <a routerLink="/" routerLinkActive="active">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <i class="fas fa-home"></i>
         Accueil
       </a>
     </li>
     <li>
-      <a routerLink="/tournois" routerLinkActive="active">
+      <a routerLink="/tournois" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         <i class="fas fa-chess"></i>
         Tournois
       </a>
