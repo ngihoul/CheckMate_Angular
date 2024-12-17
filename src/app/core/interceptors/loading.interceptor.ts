@@ -6,11 +6,15 @@ import { delay, finalize } from "rxjs";
 export const loadingInterceptor: HttpInterceptorFn = (req, next,) => {
     const loadingService = inject(LoadingService);
 
-    loadingService.show();
+    const timerId = setTimeout(() => loadingService.show(), 1000);
 
     return next(req).pipe(
         finalize(() => {
             loadingService.hide();
+
+            if(timerId){
+                clearTimeout(timerId);
+              }
         })
     );
 };
