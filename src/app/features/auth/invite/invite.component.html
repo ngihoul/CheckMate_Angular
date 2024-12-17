@@ -40,7 +40,7 @@
         </div>
 
         <div class="form-control">
-            <button type="submit">Inviter</button>
+            <button type="submit" [disabled]="inviteForm.invalid">Inviter</button>
             @if(errorMessage) {
                 <div class="error">
                     {{ errorMessage }}
