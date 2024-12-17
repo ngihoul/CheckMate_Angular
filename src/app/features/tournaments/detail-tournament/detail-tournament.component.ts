@@ -5,6 +5,7 @@ import { Tournament, TournamentStatus } from '../../../core/models/tournament.mo
 import { Notification } from '../../../core/models/notification.model';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { AgePipe } from '../../../shared/pipes/age.pipe';
 
 @Component({
   selector: 'app-detail-tournament',
@@ -142,6 +143,12 @@ export class DetailTournamentComponent {
 
         this.isPageLoading = false
       }
+    });
+  }
+
+  roundNumberChange() {
+    this.tournamentService.get(this.id).subscribe((data) => {
+      this.tournament = data
     });
   }
 

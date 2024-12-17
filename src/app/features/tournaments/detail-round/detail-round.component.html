@@ -1,7 +1,7 @@
-@if(roundId) {
+@if(roundNumber) {
     <div class="title">
         <a (click)="decrementRoundId()" class="btn"><i class="fa-solid fa-arrow-left"></i></a>
-        <h3>Ronde {{ roundId }} / {{ nbRounds }}</h3>
+        <h3>Ronde {{ roundNumber }} / {{ nbRounds }}</h3>
         <a (click)="incrementRoundId()" class="btn"><i class="fa-solid fa-arrow-right"></i></a>
     </div>
 
@@ -19,19 +19,28 @@
                 <tr>
                     <td>{{ game.whiteName }}</td>
                     <td>
-                        @switch (game.winner) {
-                            @case (WinnerEnum.notPlayed) {
-                                -
-                            } 
-                            @case (WinnerEnum.white) {
-                                1 - 0
+                        @if(!isAdmin || (isAdmin && tournament.currentRound != roundNumber)) {
+                            @switch (game.winner) {
+                                @case (WinnerEnum.notPlayed) {
+                                    -
+                                } 
+                                @case (WinnerEnum.white) {
+                                    1 - 0
+                                }
+                                @case (WinnerEnum.black) {
+                                    0 - 1
+                                }
+                                @case (WinnerEnum.draw) {
+                                    1/2 - 1/2
+                                }
                             }
-                            @case (WinnerEnum.black) {
-                                0 - 1
-                            }
-                            @case (WinnerEnum.draw) {
-                                1/2 - 1/2
-                            }
+                        } @else if (isAdmin && tournament.currentRound == roundNumber) {
+                            <select (change)="updateGameResult($event, game)">
+                                <option value="1" [selected]="game.winner == WinnerEnum.notPlayed">-</option>
+                                <option value="2" [selected]="game.winner == WinnerEnum.white">1 - 0</option>
+                                <option value="3" [selected]="game.winner == WinnerEnum.black">0 - 1</option>
+                                <option value="4" [selected]="game.winner == WinnerEnum.draw">1/2 - 1/2</option>
+                            </select>
                         }
                     </td>
                     <td>{{ game.blackName }}</td>
@@ -39,4 +48,11 @@
              }
         </tbody>
     </table>
+    @if (isAdmin && tournament.currentRound == roundNumber) {
+        <div class="next-round">
+            @if(allGamesAreCompleted()) {
+                <a (click)="nextRound()" class="btn">Passer à la ronde suivante</a>
+            }
+        </div>
+    }
 }

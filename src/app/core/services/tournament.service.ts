@@ -4,8 +4,6 @@ import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Tournament, TournamentForm } from '../models/tournament.model';
 import { TournamentFilters } from '../models/tournamentFilters.model';
-import { AuthService } from './auth.service';
-import { NotificationService } from './notification.service';
 import { Result } from '../models/result.model';
 
 @Injectable({
@@ -17,8 +15,6 @@ export class TournamentService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
-    private notificationService: NotificationService
   ) {
     this.apiUrl = environment.apiUrl;
   }
@@ -55,6 +51,10 @@ export class TournamentService {
 
   getResult(tournamentId: number): Observable<Result[]> {
     return this.http.get<Result[]>(`${this.apiUrl}/Tournaments/${tournamentId}/result`)
+  }
+
+  nextRound(tournamentId: number): Observable<boolean> {
+    return this.http.post<boolean>(`${this.apiUrl}/Tournaments/${tournamentId}/nextRound`, {})
   }
 
   createParams(filters: TournamentFilters): HttpParams {

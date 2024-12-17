@@ -6,6 +6,7 @@ header {
     justify-content: space-between;
     height: var(--header-height);
     background-color: var(--color-bg-light);
+    z-index: 9999;
 
     .logo-container {
         width: var(--nav-width);

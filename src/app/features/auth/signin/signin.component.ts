@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
-import { Notification } from '../../../core/models/notification.model';
 import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
@@ -35,7 +34,7 @@ export class SigninComponent {
           message: "Vous êtes connecté"
         })
       },
-      error: (error: any) => this.errorMessage = "Une erreur est survenue" 
+      error: (error: any) => this.errorMessage = error.error || "Une erreur est survenue" 
     });
   }
 

@@ -68,12 +68,12 @@
       </div>
     } @else {
       <div class="tournament-results">
-        @if(tournament && tournament.status == tournamentStatus.onGoing) {
+        @if(tournament && tournament.status != tournamentStatus.waitingPlayers) {
           <div class="ranking">
             <app-ranking [tournament]="tournament"></app-ranking>
           </div>
           <div class="round-details">
-            <app-detail-round [tournament]="tournament" [roundId]="roundNumber"></app-detail-round>
+            <app-detail-round [tournament]="tournament" [roundNumber]="roundNumber" (roundNumberChanged)="roundNumberChange()"></app-detail-round>
           </div>
         }
       </div>

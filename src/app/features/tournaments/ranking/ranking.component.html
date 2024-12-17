@@ -3,6 +3,7 @@
     <thead>
         <tr>
             <th>Nom d'utilisateur</th>
+            <th>Parties</th>
             <th>Score</th>
             <th>Victoires</th>
             <th>Défaites</th>
@@ -13,6 +14,7 @@
         @for(result of results; track $index) {
             <tr>
                 <td>{{ result.username }}</td>
+                <td>{{ result.nbGames }}</td>
                 <td>{{ result.score }}</td>
                 <td>{{ result.wins }}</td>
                 <td>{{ result.losses }}</td>

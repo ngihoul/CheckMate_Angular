@@ -4,5 +4,11 @@
   @if(notification) {
     <app-alert [notification]="notification"></app-alert>
   }
+
+  @if(isLoading) {
+    <app-spinner></app-spinner>
+  }
+  
   <router-outlet></router-outlet>
+  
 </main>

@@ -7,6 +7,7 @@ import { ListTournamentComponent } from './components/list-tournament/list-tourn
 import { AlertComponent } from './alert/alert.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ListPlayerComponent } from './components/list-player/list-player.component';
+import { AgePipe } from './pipes/age.pipe';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ListPlayerComponent } from './components/list-player/list-player.compon
     ListTournamentComponent,
     AlertComponent,
     SpinnerComponent,
-    ListPlayerComponent
+    ListPlayerComponent,
+    AgePipe
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { ListPlayerComponent } from './components/list-player/list-player.compon
     ListTournamentComponent,
     AlertComponent,
     SpinnerComponent,
-    ListPlayerComponent
+    ListPlayerComponent,
+    AgePipe
   ]
 })
 export class SharedModule { }

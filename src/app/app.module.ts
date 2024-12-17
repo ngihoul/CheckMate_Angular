@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { AuthModule } from './features/auth/auth.module';
 import { TournamentsModule } from './features/tournaments/tournaments.module';
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { TournamentsModule } from './features/tournaments/tournaments.module';
   providers: [
     provideHttpClient(
       withFetch(),
-      withInterceptors([tokenInterceptor]),
+      withInterceptors([tokenInterceptor, loadingInterceptor]),
     )
   ],
   bootstrap: [AppComponent]

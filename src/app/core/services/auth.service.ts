@@ -29,7 +29,19 @@ export class AuthService {
   }
 
   get isAuthenticated(): boolean {
-    return localStorage.getItem('token') !== null;
+    const token = this.getToken();
+    const payload = this.getPayload(token);
+
+    if(!payload) {
+      return false;
+    }
+
+    if(!this.isValid(payload)) {
+      this.logout();
+      return false;
+    }
+
+    return true;
   }
 
   get isAdmin(): boolean {
@@ -37,6 +49,11 @@ export class AuthService {
     const payload = this.getPayload(token);
 
     if (!payload) {
+      return false;
+    }
+
+    if(!this.isValid(payload)) {
+      this.logout();
       return false;
     }
 
@@ -108,6 +125,14 @@ export class AuthService {
     return payload.Id;
   }
 
+  isValid(payload: any): boolean {
+    if(!payload) {
+      return false;
+    }
+
+    const expirationDate = new Date(payload.exp * 1000);
+    return expirationDate > new Date();
+  }
   redirectAfterLogin(): void {
     const token = this.getToken();
     const payload = this.getPayload(token);

@@ -8,6 +8,8 @@ table {
     font-family: var(--typo-text);
 
     &.ranking {
+      width: 100%;
+      
       th {
         vertical-align: middle;
       }
