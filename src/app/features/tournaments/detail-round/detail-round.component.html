@@ -1,0 +1,42 @@
+@if(roundId) {
+    <div class="title">
+        <a (click)="decrementRoundId()" class="btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <h3>Ronde {{ roundId }} / {{ nbRounds }}</h3>
+        <a (click)="incrementRoundId()" class="btn"><i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+
+    
+    <table class="results">
+        <thead>
+            <tr>
+                <th>Blanc</th>
+                <th>Résultat</th>
+                <th>Noir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(game of games; track game.id) {
+                <tr>
+                    <td>{{ game.whiteName }}</td>
+                    <td>
+                        @switch (game.winner) {
+                            @case (WinnerEnum.notPlayed) {
+                                -
+                            } 
+                            @case (WinnerEnum.white) {
+                                1 - 0
+                            }
+                            @case (WinnerEnum.black) {
+                                0 - 1
+                            }
+                            @case (WinnerEnum.draw) {
+                                1/2 - 1/2
+                            }
+                        }
+                    </td>
+                    <td>{{ game.blackName }}</td>
+                </tr>
+             }
+        </tbody>
+    </table>
+}

@@ -12,8 +12,15 @@
         }
       </ul>
       }
+
+      @if(tournament.status == tournamentStatus.onGoing) {
+        <p><strong>Ronde actuelle :</strong> {{ tournament.currentRound }}</p>
+      } @else if (tournament.status == tournamentStatus.Terminated) {
+        <p><strong>Tournoi terminé</strong></p>
+      }
+
       <p><strong>Inscription ouverte jusqu'à:</strong> 
-        @if(tournament.endRegistration > today) {
+        @if(tournament.endRegistration < today) {
           Inscription terminée
         } 
         @else {
@@ -31,11 +38,11 @@
     </div>
 
     <div class="buttons">
-      @if(tournament.canRegister && !tournament.isRegistered && !isBtnLoading) {
+      @if(tournament.canRegister && !tournament.isRegistered && !isBtnLoading && !isStarted) {
         <a class="btn" (click)="register()">S'inscrire</a>
       }
   
-      @if(tournament.isRegistered && !isBtnLoading) {
+      @if(tournament.isRegistered && !isBtnLoading && !isStarted) {
         <a class="btn" (click)="unregister()">Se désinscrire</a>
       }
   
@@ -43,11 +50,13 @@
         <app-spinner></app-spinner>
       }
   
-      @if(tournament.minPlayers && tournament.nbPlayers) {
-        @if(isAdmin && tournament.endRegistration <= today && tournament.minPlayers >= tournament.nbPlayers) {
-          <a class="btn" (click)="startTournament()">Démarrer le tournoi</a>
+        @if(isAdmin && 
+            !isStarted &&
+            !isBtnLoading && 
+            (tournament.endRegistration >= today || (tournament.minPlayers && tournament.minPlayers <= tournament.nbPlayers!)
+        )) {
+          <a class="btn cta" (click)="start()">Démarrer le tournoi</a>
         }
-      }
     </div>
 
     @if(!isStarted) {
@@ -58,13 +67,15 @@
         }
       </div>
     } @else {
-      <div class="nav-round">
-        <ul>
-          <li class="ranking">Classement</li>
-          @for(item of fakeArray; track $index) {
-            <li>Round {{ $index + 1 }}</li>
-          }
-        </ul>
+      <div class="tournament-results">
+        @if(tournament && tournament.status == tournamentStatus.onGoing) {
+          <div class="ranking">
+            <app-ranking [tournament]="tournament"></app-ranking>
+          </div>
+          <div class="round-details">
+            <app-detail-round [tournament]="tournament" [roundId]="roundNumber"></app-detail-round>
+          </div>
+        }
       </div>
     }
   </div>

@@ -6,6 +6,7 @@ import { Tournament, TournamentForm } from '../models/tournament.model';
 import { TournamentFilters } from '../models/tournamentFilters.model';
 import { AuthService } from './auth.service';
 import { NotificationService } from './notification.service';
+import { Result } from '../models/result.model';
 
 @Injectable({
   providedIn: 'root',
@@ -40,16 +41,20 @@ export class TournamentService {
     return this.http.post<Tournament>(`${this.apiUrl}/Tournaments`, tournamentForm);
   }
 
-  register(tournamentId: number, userId: number) {
+  register(tournamentId: number, userId: number): Observable<Tournament> {
     return this.http.post<Tournament>(`${this.apiUrl}/Tournaments/${tournamentId}/register/${userId}`, {})
   }
 
-  unregister(tournamentId: number, userId: number){
+  unregister(tournamentId: number, userId: number): Observable<Tournament>{
     return this.http.post<Tournament>(`${this.apiUrl}/Tournaments/${tournamentId}/unregister/${userId}`, {})
   }
 
-  start(tournamentId: number) {
+  start(tournamentId: number): Observable<Tournament> {
     return this.http.post<Tournament>(`${this.apiUrl}/Tournaments/${tournamentId}/start`, {})
+  }
+
+  getResult(tournamentId: number): Observable<Result[]> {
+    return this.http.get<Result[]>(`${this.apiUrl}/Tournaments/${tournamentId}/result`)
   }
 
   createParams(filters: TournamentFilters): HttpParams {

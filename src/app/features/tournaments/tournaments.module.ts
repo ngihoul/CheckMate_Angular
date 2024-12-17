@@ -7,6 +7,8 @@ import { HomeTournamentComponent } from './home-tournament/home-tournament.compo
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { DetailTournamentComponent } from './detail-tournament/detail-tournament.component';
+import { RankingComponent } from './ranking/ranking.component';
+import { DetailRoundComponent } from './detail-round/detail-round.component';
 
 
 
@@ -14,7 +16,9 @@ import { DetailTournamentComponent } from './detail-tournament/detail-tournament
   declarations: [
     CreateComponent,
     HomeTournamentComponent,
-    DetailTournamentComponent
+    DetailTournamentComponent,
+    RankingComponent,
+    DetailRoundComponent
   ],
   imports: [
     CommonModule,

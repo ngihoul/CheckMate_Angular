@@ -28,10 +28,11 @@ export class DetailTournamentComponent {
   isAdmin: boolean = false;
   today: Date = new Date();
 
-  nbRound: number = 0;
-  fakeArray: number[] = []
-
   isStarted!: boolean;
+
+  roundNumber: number | undefined = undefined;
+
+  tournamentStatus = TournamentStatus;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,13 +43,13 @@ export class DetailTournamentComponent {
     this.id = this.route.snapshot.params['id'];
     this.userId = this.authService.getUserId();
 
-    this.authService.isAdmin$.subscribe((data) => (this.isAdmin = data));
+    this.authService.isAdmin$.subscribe((data) => { 
+      this.isAdmin = data
+    });
 
     this.tournamentService.get(this.id).subscribe((data) => {
       this.tournament = data,
-      this.isStarted = this.tournament.status === TournamentStatus.onGoing;
-      this.nbRound = Math.max(...this.tournament.games.map(game => game.round));
-      this.fakeArray = Array(this.nbRound).fill(0);
+      this.updateTournamentStatus();
     });
   }
 
@@ -116,7 +117,7 @@ export class DetailTournamentComponent {
     });
   }
 
-  startTournament() {
+  start() {
     this.isPageLoading = true;
 
     this.tournamentService.start(this.id).subscribe({
@@ -126,9 +127,13 @@ export class DetailTournamentComponent {
           message: 'Le tournoi a commencé',
         }),
 
-        this.tournamentService.get(this.id).subscribe((data) => (this.tournament = data));
+        this.tournamentService.get(this.id).subscribe((data) =>  {
+          this.tournament = data
+          this.updateTournamentStatus();
+        });
       },
       error: (error: any) => {
+        console.log(error);
         this.errorMessage = error.error || 'Une erreur est survenue';
         this.notificationService.set({
           type: 'error',
@@ -138,5 +143,13 @@ export class DetailTournamentComponent {
         this.isPageLoading = false
       }
     });
+  }
+
+  updateTournamentStatus() {
+    this.isStarted = this.tournament.status === TournamentStatus.onGoing;
+
+      if(this.isStarted) {
+        this.roundNumber = this.tournament.currentRound 
+      }
   }
 }

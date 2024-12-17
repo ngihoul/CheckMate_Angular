@@ -1,0 +1,23 @@
+<h3>Classement</h3>
+<table class="ranking">
+    <thead>
+        <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Score</th>
+            <th>Victoires</th>
+            <th>Défaites</th>
+            <th>Egalités</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for(result of results; track $index) {
+            <tr>
+                <td>{{ result.username }}</td>
+                <td>{{ result.score }}</td>
+                <td>{{ result.wins }}</td>
+                <td>{{ result.losses }}</td>
+                <td>{{ result.draws }}</td>
+            </tr>
+        }
+    </tbody>
+</table>

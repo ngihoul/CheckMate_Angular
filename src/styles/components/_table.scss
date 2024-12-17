@@ -6,6 +6,24 @@ table {
     border: 1px solid var(--color-border);
     border-radius: 0.25rem;
     font-family: var(--typo-text);
+
+    &.ranking {
+      th {
+        vertical-align: middle;
+      }
+      td:not(:first-child) {
+        text-align: center;
+      }
+    }
+
+    &.results {
+      th, td {
+        text-align: center;
+        vertical-align: middle;
+        width: 33.33%;
+      }
+      
+    }
   
     th,
     td {
