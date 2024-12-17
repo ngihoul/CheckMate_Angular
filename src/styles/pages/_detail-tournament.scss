@@ -56,16 +56,29 @@
 
         .ranking {
             margin: 0 auto;
+
+            .title {
+                height: 71.53px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 1.6rem;
+            }
+
+            h3 {
+                margin-bottom: 0;
+            }
         }
 
         .round-details {
             .title {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 1.6rem;
 
                 h3 {
-                    margin-bottom: 0;
+                        margin-bottom: 0;
                 }
             }
 
