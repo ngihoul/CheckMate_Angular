@@ -5,7 +5,6 @@ import { Tournament, TournamentStatus } from '../../../core/models/tournament.mo
 import { Notification } from '../../../core/models/notification.model';
 import { NotificationService } from '../../../core/services/notification.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { AgePipe } from '../../../shared/pipes/age.pipe';
 
 @Component({
   selector: 'app-detail-tournament',
