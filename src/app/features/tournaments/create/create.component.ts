@@ -86,6 +86,10 @@ export class CreateComponent {
       .filter((id: number | null) => id !== null) as number[];
   }
 
+  canDeactivate(): boolean {
+    return this.createTournamentForm.dirty;
+  }
+
   get name() {
     return this.createTournamentForm.get('name');
   }

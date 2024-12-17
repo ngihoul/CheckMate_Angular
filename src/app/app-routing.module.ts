@@ -10,6 +10,7 @@ const routes: Routes = [
     path: 'tournois',
     loadChildren: () => import('./features/tournaments/tournaments.module').then((m) => m.TournamentsModule),
   },
+  { path:'**', redirectTo: '' }
 ];
 
 @NgModule({

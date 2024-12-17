@@ -41,7 +41,10 @@ export class InviteComponent {
       gender: ['', [Validators.required, Validators.pattern('^[MFO]$')]],
     });
   }
-
+  
+  canDeactivate(): boolean {
+    return this.inviteForm.dirty;
+  }
   onSubmit() {
     this.authService.invite(this.inviteForm.value).subscribe({
       next: () => {
