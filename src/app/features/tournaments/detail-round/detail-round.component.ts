@@ -84,18 +84,9 @@ export class DetailRoundComponent implements OnInit, OnChanges {
     this.gameService.setResult(game.id, winner).subscribe({
       next: () => {
         this.games.find(g => g.id === game.id)!.winner = winner;
-        this.notificationService.set({
-          type: 'success',
-          message: "Le match a bien été mis à jour"
-        })
+        this.notificationService.setSuccess("Le match a bien été mis à jour")
       },
-      error: (error: any) => {
-        this.errorMessage = error.error || 'Une erreur est survenue';
-        this.notificationService.set({
-          type: 'error',
-          message: this.errorMessage
-        })
-      }
+      error: (error: any) => this.notificationService.setError(error)
     });
   }
 
@@ -106,19 +97,12 @@ export class DetailRoundComponent implements OnInit, OnChanges {
   nextRound() {
     this.tournamentService.nextRound(this.tournament.id).subscribe({
       next: () => {
-        this.incrementRoundId();
-        this.roundNumberChanged.emit(this.roundNumber!);
-        this.notificationService.set({
-          type: 'success',
-          message: "Le tournoi a bien été mis à jour"
-        })
+        this.incrementRoundId(),
+        this.roundNumberChanged.emit(this.roundNumber!),
+        this.notificationService.setSuccess("Le tournoi a bien été mis à jour")
       },
       error: (error: any) => {
-        this.errorMessage = error.error || 'Une erreur est survenue';
-        this.notificationService.set({
-          type: 'error',
-          message: this.errorMessage
-        })
+        this.notificationService.setError(error);
       }
     })
   }

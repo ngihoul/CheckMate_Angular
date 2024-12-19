@@ -142,8 +142,10 @@ export class AuthService {
       return;
     }
 
+    console.log(payload);
+
     if (!payload.Username) {
-      this.router.navigate(['init-compte']);
+      this.router.navigate(['auth/init-compte']);
     } else {
       this.router.navigate(['/']);
     }

@@ -13,7 +13,6 @@ import { NotificationService } from '../../../core/services/notification.service
 })
 export class HeaderComponent {
   isAuthenticated!: boolean;
-  username: string = '';
 
   notification: Notification | null = null;
 
@@ -25,16 +24,13 @@ export class HeaderComponent {
     this.isAuthenticated = this.authService.isAuthenticated;
 
     this.authService.isAuthenticated$.subscribe({
-      next: (data: boolean) => (this.isAuthenticated = data),
+      next: (data: boolean) => this.isAuthenticated = data,
     });
   }
 
   logout(): void {
     this.authService.logout();
-    this.notificationService.set({
-      type: 'success',
-      message: 'Vous êtes déconnecté',
-    })
+    this.notificationService.setSuccess('Vous êtes déconnecté');
     this.router.navigate(['']);
   }
 }

@@ -18,9 +18,6 @@ import { NotificationService } from '../../../core/services/notification.service
 })
 export class CreateComponent {
   createTournamentForm: FormGroup;
-  errorMessage: string | undefined = undefined;
-  errorCategories: string | undefined = undefined;
-
   categories: Category[] = [];
 
   constructor(
@@ -46,9 +43,10 @@ export class CreateComponent {
 
     this.categoryService.getAll().subscribe({
       next: (categories: Category[]) => {
-        (this.categories = categories), this.updateCategoriesForm(), (this.errorCategories = undefined);
+        this.categories = categories, 
+        this.updateCategoriesForm()
       },
-      error: () => (this.errorCategories = 'Une erreur est survenue'),
+      error: (error: any) => this.notificationService.setError(error),
     });
   }
 
@@ -64,14 +62,10 @@ export class CreateComponent {
     if (this.createTournamentForm.valid) {
       this.tournamentService.create(this.createTournamentForm.value).subscribe({
         next: (tournament) => {
-          this.notificationService.set({
-            type: 'success',
-            message: 'Le tournoi a bien été créé',
-          }),
-            (this.errorMessage = undefined),
-            this.router.navigate([`detail/${tournament.id}`]);
+          this.notificationService.setSuccess('Le tournoi a bien été créé'),
+          this.router.navigate([`detail/${tournament.id}`]);
         },
-        error: () => (this.errorMessage = 'Une erreur est survenue'),
+        error: (error: any) => this.notificationService.setError(error),
       });
     }
   }

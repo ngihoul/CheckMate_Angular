@@ -12,7 +12,6 @@ import { NotificationService } from '../../../core/services/notification.service
 })
 export class SigninComponent {
   signInForm: FormGroup;
-  errorMessage: string | undefined = undefined;
 
   constructor(
     private fb: FormBuilder, 
@@ -27,14 +26,8 @@ export class SigninComponent {
 
   onSubmit() {
     this.authService.login(this.signInForm.value).subscribe({ 
-      next: (token: string) => {
-        this.errorMessage = undefined,
-        this.notificationService.set({
-          type: "success", 
-          message: "Vous êtes connecté"
-        })
-      },
-      error: (error: any) => this.errorMessage = error.error || "Une erreur est survenue" 
+      next: () => this.notificationService.setSuccess("Vous êtes connecté"),
+      error: (error: any) => this.notificationService.setError(error)
     });
   }
 

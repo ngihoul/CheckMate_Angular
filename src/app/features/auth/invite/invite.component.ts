@@ -13,7 +13,6 @@ import { NotificationService } from '../../../core/services/notification.service
 })
 export class InviteComponent {
   inviteForm: FormGroup;
-  errorMessage: string | undefined = undefined;
   genderChoices: Gender[] = [
     {
       label: 'Homme',
@@ -45,17 +44,14 @@ export class InviteComponent {
   canDeactivate(): boolean {
     return this.inviteForm.dirty;
   }
+  
   onSubmit() {
     this.authService.invite(this.inviteForm.value).subscribe({
       next: () => {
-        this.notificationService.set({
-          type: 'success',
-          message: "L'invitation a bien été envoyée",
-        }),
-          this.router.navigate(['']),
-          (this.errorMessage = undefined);
+        this.notificationService.setSuccess("L'invitation a bien été envoyée"),
+        this.router.navigate([''])
       },
-      error: () => (this.errorMessage = 'Une erreur est survenue'),
+      error: (error: any) => this.notificationService.setError(error)
     });
   }
 

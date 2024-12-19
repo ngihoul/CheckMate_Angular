@@ -1,10 +1,5 @@
 <div class="tournament-create">
     <h2>Créer un tournoi</h2>
-    @if(errorCategories) {
-        <div class="error">
-            Erreur lors du chargement des categories
-        </div>
-    }
 
     <form [formGroup]="createTournamentForm" (ngSubmit)="createTournament()">
         <div class="form-control">
@@ -135,9 +130,6 @@
 
         <div class="form-control">
             <button [disabled]="createTournamentForm.invalid" type="submit">Créer</button>
-            <div class="error" *ngIf="errorMessage">
-                {{ errorMessage }}
-            </div>
         </div>
     </form>
 </div>

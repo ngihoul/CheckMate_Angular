@@ -52,7 +52,9 @@ export class InitAccountComponent implements OnInit {
     const payload = this.authService.getPayload(this.authService.getToken());
     const userId = payload.Id;
     
-    this.authService.initAccount(userId, this.initAccountForm.value).subscribe();
+    this.authService.initAccount(userId, this.initAccountForm.value).subscribe({
+      error: (error: any) => this.notificationService.setError(error),
+    });
   }
 
   get username() {

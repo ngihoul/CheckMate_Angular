@@ -20,7 +20,6 @@ export class DetailTournamentComponent {
   tournament!: Tournament;
 
   notification!: Notification | null;
-  errorMessage: string = '';
 
   isBtnLoading: boolean = false;
   isPageLoading: boolean = false;
@@ -57,28 +56,21 @@ export class DetailTournamentComponent {
     this.isBtnLoading = true;
 
     if (!this.userId) {
-      this.errorMessage = 'Vous devez être connecté pour vous inscrire à un tournoi';
-      this.notificationService.set({ type: 'error', message: this.errorMessage });
+      this.notificationService.set({ 
+        type: 'error', 
+        message: 'Vous devez être connecté pour vous inscrire à un tournoi' 
+      });
 
       return;
     }
 
     return this.tournamentService.register(this.id, this.userId).subscribe({
       next: () => {
-        this.notificationService.set({
-          type: 'success',
-          message: 'Vous êtes inscrit au tournoi',
-        }),
-
+        this.notificationService.setSuccess('Vous êtes inscrit au tournoi'),
         this.tournamentService.get(this.id).subscribe((data) => (this.tournament = data));
       },
       error: (error: any) => {
-        this.errorMessage = error.error || 'Une erreur est survenue';
-        this.notificationService.set({
-          type: 'error',
-          message: this.errorMessage,
-        }),
-
+        this.notificationService.setError(error),
         this.isBtnLoading = false
       },
       complete: () => (this.isBtnLoading = false),
@@ -89,28 +81,18 @@ export class DetailTournamentComponent {
     this.isBtnLoading = true;
 
     if (!this.userId) {
-      this.errorMessage = 'Vous devez être connecté pour vous inscrire à un tournoi';
-      this.notificationService.set({ type: 'error', message: this.errorMessage });
+      this.notificationService.set({ type: 'error', message: 'Vous devez être connecté pour vous inscrire à un tournoi' });
 
       return;
     }
 
     return this.tournamentService.unregister(this.id, this.userId).subscribe({
       next: () => {
-        this.notificationService.set({
-          type: 'success',
-          message: 'Vous êtes désinscrit du tournoi',
-        }),
-
+        this.notificationService.setSuccess('Vous êtes désinscrit du tournoi'),
         this.tournamentService.get(this.id).subscribe((data) => (this.tournament = data));
       },
       error: (error: any) => {
-        this.errorMessage = error.error || 'Une erreur est survenue';
-        this.notificationService.set({
-          type: 'error',
-          message: this.errorMessage,
-        }),
-
+        this.notificationService.setError(error),
         this.isBtnLoading = false
       },
       complete: () => (this.isBtnLoading = false),
@@ -122,10 +104,7 @@ export class DetailTournamentComponent {
 
     this.tournamentService.start(this.id).subscribe({
       next: () => {
-        this.notificationService.set({
-          type: 'success',
-          message: 'Le tournoi a commencé',
-        }),
+        this.notificationService.setSuccess('Le tournoi a commencé'),
 
         this.tournamentService.get(this.id).subscribe((data) =>  {
           this.tournament = data
@@ -133,13 +112,7 @@ export class DetailTournamentComponent {
         });
       },
       error: (error: any) => {
-        console.log(error);
-        this.errorMessage = error.error || 'Une erreur est survenue';
-        this.notificationService.set({
-          type: 'error',
-          message: this.errorMessage,
-        }),
-
+        this.notificationService.setError(error),
         this.isPageLoading = false
       }
     });

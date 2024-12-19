@@ -9,7 +9,17 @@ export class NotificationService {
   private _message = new BehaviorSubject<Notification | null>(null);
   public message$ = this._message.asObservable();
 
-  constructor() {}
+  setError(error: any, message?: string): void {
+    if(!message) {
+      message = 'Une erreur est survenue'
+    }
+
+    this._message.next({ type: 'error', message: error.error || message });
+  }
+
+  setSuccess(message: string): void {
+    this._message.next({ type: 'success', message });
+  }
 
   set(message: Notification): void {
     this._message.next(message);
