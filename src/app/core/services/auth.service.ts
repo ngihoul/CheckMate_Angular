@@ -75,7 +75,7 @@ export class AuthService {
 
   initAccount(userId: number, credentials: initAccountForm): Observable<User> {
     return this.http.patch<User>(`${this.apiUrl}/init-account/${userId}`, credentials).pipe(
-      tap((user: User) => {
+      tap(() => {
         // Refresh token
         this.login({ usernameOrEmail: credentials.username, password: credentials.password } as Login).subscribe();
       }),

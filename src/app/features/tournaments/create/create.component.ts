@@ -18,6 +18,7 @@ import { NotificationService } from '../../../core/services/notification.service
 })
 export class CreateComponent {
   createTournamentForm: FormGroup;
+  formSubmitted: boolean = false;
   categories: Category[] = [];
 
   constructor(
@@ -57,6 +58,7 @@ export class CreateComponent {
   }
 
   createTournament(): void {
+    this.formSubmitted = true;
     this.createTournamentForm.value.categoriesIds = this.getSelectedCategories();
 
     if (this.createTournamentForm.valid) {
@@ -65,7 +67,10 @@ export class CreateComponent {
           this.notificationService.setSuccess('Le tournoi a bien été créé'),
           this.router.navigate([`detail/${tournament.id}`]);
         },
-        error: (error: any) => this.notificationService.setError(error),
+        error: (error: any) => { 
+          this.formSubmitted = true,
+          this.notificationService.setError(error)
+        }
       });
     }
   }
@@ -81,7 +86,7 @@ export class CreateComponent {
   }
 
   canDeactivate(): boolean {
-    return this.createTournamentForm.dirty;
+    return this.createTournamentForm.dirty && !this.formSubmitted;
   }
 
   get name() {

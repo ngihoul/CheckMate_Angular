@@ -14,6 +14,7 @@ import { NotificationService } from '../../../core/services/notification.service
 
 export class InitAccountComponent implements OnInit {
   initAccountForm: FormGroup;
+  formSubmitted: boolean = false;
 
   constructor(
     private fb: FormBuilder, 
@@ -45,15 +46,20 @@ export class InitAccountComponent implements OnInit {
   }
 
   canDeactivate(): boolean {
-    return this.initAccountForm.dirty;
+    return this.initAccountForm.dirty && !this.formSubmitted;
   }
 
   onSubmit() {
+    this.formSubmitted = true;
+    
     const payload = this.authService.getPayload(this.authService.getToken());
     const userId = payload.Id;
     
     this.authService.initAccount(userId, this.initAccountForm.value).subscribe({
-      error: (error: any) => this.notificationService.setError(error),
+      error: (error: any) => { 
+        this.formSubmitted = false,
+        this.notificationService.setError(error) 
+      },
     });
   }
 
