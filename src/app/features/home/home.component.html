@@ -1,7 +1,7 @@
 <div class="home">
   <h2>CheckMate</h2>
 
-  @if(isAuthenticated) {
+  @if(authService.isAuthenticated()) {
     <div class="hero">
       <h3>Agrandissons la communauté</h3>
       <p>Invite ta famille, tes amis, tes connaissances, tes collègues, etc. et agrandissons ensemble la communauté.</p>
@@ -11,6 +11,6 @@
   } 
   
   @if(tournaments) {
-    <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="isAuthenticated"></app-list-tournament>
+    <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="authService.isAuthenticated()"></app-list-tournament>
   } 
 </div>

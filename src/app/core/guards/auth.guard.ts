@@ -5,10 +5,10 @@ import { NotificationService } from '../services/notification.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
     const notificationService = inject(NotificationService)
-    const auth = inject(AuthService)
+    const authService = inject(AuthService)
     const router = inject(Router)
 
-    if (auth.isAuthenticated) {
+    if (authService.isAuthenticated()) {
         return true;
     } else {
         notificationService.set({

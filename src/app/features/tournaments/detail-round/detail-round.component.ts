@@ -36,9 +36,7 @@ export class DetailRoundComponent implements OnInit, OnChanges {
     private tournamentService: TournamentService, 
     private gameService: GameService,
     private notificationService: NotificationService
-  ) {
-    this.authService.isAdmin$.subscribe((data) => { this.isAdmin = data });
-  }
+  ) {}
 
   ngOnInit() {
     this.nbRounds = Math.max(...this.tournament.games.map(game => game.round));

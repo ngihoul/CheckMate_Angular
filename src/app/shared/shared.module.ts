@@ -8,6 +8,7 @@ import { AlertComponent } from './alert/alert.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ListPlayerComponent } from './components/list-player/list-player.component';
 import { AgePipe } from './pipes/age.pipe';
+import { FormErrorComponent } from './components/form-error/form-error.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AgePipe } from './pipes/age.pipe';
     AlertComponent,
     SpinnerComponent,
     ListPlayerComponent,
-    AgePipe
+    AgePipe,
+    FormErrorComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { AgePipe } from './pipes/age.pipe';
     AlertComponent,
     SpinnerComponent,
     ListPlayerComponent,
-    AgePipe
+    AgePipe,
+    FormErrorComponent
   ]
 })
 export class SharedModule { }

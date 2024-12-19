@@ -12,21 +12,13 @@ import { NotificationService } from '../../../core/services/notification.service
   styles: ``,
 })
 export class HeaderComponent {
-  isAuthenticated!: boolean;
-
   notification: Notification | null = null;
 
   constructor(
-    private authService: AuthService, 
+    public authService: AuthService, 
     private router: Router,
     private notificationService: NotificationService 
-  ) {
-    this.isAuthenticated = this.authService.isAuthenticated;
-
-    this.authService.isAuthenticated$.subscribe({
-      next: (data: boolean) => this.isAuthenticated = data,
-    });
-  }
+  ) {}
 
   logout(): void {
     this.authService.logout();

@@ -24,7 +24,6 @@ export class DetailTournamentComponent {
   isBtnLoading: boolean = false;
   isPageLoading: boolean = false;
 
-  isAdmin: boolean = false;
   today: Date = new Date();
 
   isStarted!: boolean;
@@ -37,14 +36,10 @@ export class DetailTournamentComponent {
     private route: ActivatedRoute,
     private tournamentService: TournamentService,
     private notificationService: NotificationService,
-    private authService: AuthService
+    public authService: AuthService
   ) {
     this.id = this.route.snapshot.params['id'];
     this.userId = this.authService.getUserId();
-
-    this.authService.isAdmin$.subscribe((data) => { 
-      this.isAdmin = data
-    });
 
     this.tournamentService.get(this.id).subscribe((data) => {
       this.tournament = data,

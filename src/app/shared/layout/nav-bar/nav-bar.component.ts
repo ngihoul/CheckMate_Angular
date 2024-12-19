@@ -9,23 +9,8 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './nav-bar.component.html',
   styles: ``
 })
-export class NavBarComponent implements OnDestroy {
-  isAuthenticated: boolean = false;
-  isAdmin: boolean = false;
+export class NavBarComponent {
   private destroy$ = new Subject<void>();
 
-  constructor(private authService: AuthService) {
-    this.authService.initializeAuthState();
-    this.authService.isAuthenticated$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(data => this.isAuthenticated = data);
-    this.authService.isAdmin$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(data => this.isAdmin = data);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  constructor(public authService: AuthService) {}
 }

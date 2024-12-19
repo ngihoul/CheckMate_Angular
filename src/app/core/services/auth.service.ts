@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { Login } from '../models/login.model';
@@ -16,48 +16,38 @@ import { invitationForm } from '../models/invitationForm.model';
 })
 export class AuthService {
   apiUrl: string;
-  isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAuthenticated);
-  isAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.isAdmin);
+
+  private _isAuthenticated = signal(false);
+  isAuthenticated = this._isAuthenticated.asReadonly();
+
+  private _isAdmin = signal(false);
+  isAdmin = this._isAdmin.asReadonly();
 
   constructor(private http: HttpClient, private router: Router) {
     this.apiUrl = environment.apiUrl;
+    this.initializeAuth();
   }
 
-  initializeAuthState(): void {
-    this.isAuthenticated$.next(this.isAuthenticated);
-    this.isAdmin$.next(this.isAdmin);
-  }
-
-  get isAuthenticated(): boolean {
-    const token = this.getToken();
-    const payload = this.getPayload(token);
-
-    if(!payload) {
-      return false;
-    }
-
-    if(!this.isValid(payload)) {
-      this.logout();
-      return false;
-    }
-
-    return true;
-  }
-
-  get isAdmin(): boolean {
+  initializeAuth(): void {
     const token = this.getToken();
     const payload = this.getPayload(token);
 
     if (!payload) {
-      return false;
+      this._isAuthenticated.set(false);
+      this._isAdmin.set(false);
+      return;
     }
 
     if(!this.isValid(payload)) {
-      this.logout();
-      return false;
+      this._isAuthenticated.set(false);
+      return;
     }
 
-    return payload.Role === 'Admin';
+    if (payload.Role === 'Admin') {
+      this._isAdmin.set(true);
+    }
+
+    return this._isAuthenticated.set(true);
   }
 
   login(credentials: Login): Observable<string> {
@@ -88,8 +78,11 @@ export class AuthService {
 
   setToken(token: string): void {
     localStorage.setItem('token', token);
-    this.isAuthenticated$.next(this.isAuthenticated);
-    this.isAdmin$.next(this.isAdmin);
+    this._isAuthenticated.set(true);
+
+    if(this.isAdminTest()) {
+      this._isAdmin.set(true);
+    }
   }
 
   getToken(): string | null {
@@ -98,8 +91,9 @@ export class AuthService {
 
   removeToken(): void {
     localStorage.removeItem('token');
-    this.isAuthenticated$.next(this.isAuthenticated);
-    this.isAdmin$.next(this.isAdmin);
+
+    this._isAuthenticated.set(false);
+    this._isAdmin.set(false);
   }
 
   getPayload(token: string | null): any {
@@ -123,6 +117,17 @@ export class AuthService {
     }
 
     return payload.Id;
+  }
+
+  isAdminTest(): boolean {
+    const token = this.getToken();
+    const payload = this.getPayload(token);
+
+    if (!payload) {
+      return false;
+    }
+
+    return payload.Role === 'Admin';
   }
 
   isValid(payload: any): boolean {

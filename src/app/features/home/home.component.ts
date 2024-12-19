@@ -11,16 +11,12 @@ import { TournamentService } from '../../core/services/tournament.service';
   styles: ``,
 })
 export class HomeComponent {
-  isAuthenticated: boolean;
   tournaments: Tournament[] = [];
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private tournamentService: TournamentService,
   ) {
-    this.isAuthenticated = this.authService.isAuthenticated;
-    this.authService.isAuthenticated$.subscribe((data) => (this.isAuthenticated = data));
-
     this.tournamentService.getAll().subscribe((data) => (this.tournaments = data));
   }
 }

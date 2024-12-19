@@ -32,7 +32,7 @@
         </li>
       </ul>
     </li>
-    @if(isAuthenticated) {
+    @if(authService.isAuthenticated()) {
     <li>
       <a routerLink="/auth/invite" routerLinkActive="active">
         <i class="fas fa-user-friends"></i>
@@ -41,7 +41,7 @@
     </li>
     }
   </ul>
-  @if(isAuthenticated && isAdmin){
+  @if(authService.isAuthenticated() && authService.isAdmin()){
   <ul class="admin-nav">
     <p class="nav-title">Admin</p>
     <li>

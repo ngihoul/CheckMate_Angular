@@ -2,6 +2,6 @@
    <h2>Tous nos tournois</h2>
    <!-- TODO : Système de filtrage ! -->
    @if(tournaments) {
-      <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="isAuthenticated"></app-list-tournament>
+      <app-list-tournament [tournaments]="tournaments" [isAuthenticated]="authService.isAuthenticated()"></app-list-tournament>
    }
 </div>

@@ -68,7 +68,7 @@ export class CreateComponent {
           this.router.navigate([`detail/${tournament.id}`]);
         },
         error: (error: any) => { 
-          this.formSubmitted = true,
+          this.formSubmitted = false,
           this.notificationService.setError(error)
         }
       });

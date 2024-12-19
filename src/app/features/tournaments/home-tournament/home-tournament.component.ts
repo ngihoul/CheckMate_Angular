@@ -11,16 +11,12 @@ import { Tournament } from '../../../core/models/tournament.model';
   styles: ``,
 })
 export class HomeTournamentComponent {
-  isAuthenticated!: boolean;
   tournaments!: Tournament[];
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private tournamentService: TournamentService,
   ) {
-    this.authService.initializeAuthState();
-    this.authService.isAuthenticated$.subscribe((data) => (this.isAuthenticated = data));
-
     this.tournamentService.getAll().subscribe((data) => (this.tournaments = data));
   }
 }

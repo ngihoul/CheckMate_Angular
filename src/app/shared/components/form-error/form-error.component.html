@@ -1,0 +1,11 @@
+<div class="error" *ngIf="control?.invalid && control?.touched">
+    <div *ngIf="control?.hasError('required')">
+        Ce champ est obligatoire.
+    </div>
+    <div *ngIf="control?.hasError('minlength')">
+        Le nom doit avoir au moins XX caractères.
+    </div>
+    <div *ngIf="control?.hasError('maxlength')">
+        Le nom doit avoir au plus XXX caractères.
+    </div>
+</div>

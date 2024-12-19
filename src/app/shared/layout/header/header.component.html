@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="account-container">
-        @if(!isAuthenticated){
+        @if(!authService.isAuthenticated()){
             <a routerLink="/auth/signin" class="signin-btn">Se connecter</a>
         } @else {
             <a (click)="logout()" class="signout-btn">

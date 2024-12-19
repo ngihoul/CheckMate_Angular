@@ -5,10 +5,10 @@ import { NotificationService } from '../services/notification.service';
 
 export const adminGuard: CanActivateFn = (route, state) => {
     const notificationService = inject(NotificationService)
-    const auth = inject(AuthService)
+    const authService = inject(AuthService)
     const router = inject(Router)
 
-    if (auth.isAdmin) {
+    if (authService.isAdmin()) {
         return true;
     } else {
         notificationService.set({
