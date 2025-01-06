@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,20 @@ import { AbstractControl } from '@angular/forms';
   templateUrl: './form-error.component.html',
   styles: ``
 })
-export class FormErrorComponent {
-  @Input({ required: true }) control!: AbstractControl<any> | null;
+export class FormErrorComponent implements OnInit, OnChanges {
+  @Input() control!: AbstractControl;
+
+  /**
+   *
+   */
+  constructor() {
+  }
+
+  ngOnInit(): void {
+    console.log(this.control);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void { 
+    console.log(this.control);
+  }
 }

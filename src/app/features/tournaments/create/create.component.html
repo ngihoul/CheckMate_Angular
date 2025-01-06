@@ -5,7 +5,7 @@
         <div class="form-control">
             <label for="name">Nom</label>
             <input type="text" id="name" formControlName="name" required>
-            <app-form-error [control]="name"></app-form-error>
+            <app-form-error [control]="name!"></app-form-error>
         </div>
 
         <div class="form-control">
@@ -16,13 +16,13 @@
         <div class="form-control">
             <label for="minPlayers">Nombre de joueurs minimum</label>
             <input type="number" id="minPlayers" formControlName="minPlayers" required>
-            <app-form-error [control]="minPlayers"></app-form-error>
+            <app-form-error [control]="minPlayers!"></app-form-error>
         </div>
 
         <div class="form-control">
             <label for="maxPlayers">Nombre de joueurs maximum</label>
             <input type="number" id="maxPlayers" formControlName="maxPlayers" required>
-            <app-form-error [control]="maxPlayers"></app-form-error>
+            <app-form-error [control]="maxPlayers!"></app-form-error>
             <div class="error" *ngIf="minPlayers?.touched && maxPlayers?.touched">
                 <div *ngIf="createTournamentForm?.hasError('nbPlayers')">
                     Le nombre de joueurs maximum doit être supérieur ou égal au nombre de joueurs minimum.
@@ -33,13 +33,13 @@
         <div class="form-control">
             <label for="minElo">Elo minimum</label>
             <input type="number" id="minElo" formControlName="minElo">
-            <app-form-error [control]="minElo"></app-form-error>
+            <app-form-error [control]="minElo!"></app-form-error>
         </div>
 
         <div class="form-control">
             <label for="maxElo">Elo maximum</label>
             <input type="number" id="maxElo" formControlName="maxElo">
-            <app-form-error [control]="maxElo"></app-form-error>
+            <app-form-error [control]="maxElo!"></app-form-error>
             
             <div class="error" *ngIf="createTournamentForm?.hasError('elo')">
                 {{ createTournamentForm.getError('elo') }}
@@ -67,7 +67,7 @@
                 <input type="checkbox" id="womenOnly" formControlName="womenOnly">
                 <label for="womenOnly">Tournoi féminin</label>
             </div>
-            <app-form-error [control]="womenOnly"></app-form-error>
+            <app-form-error [control]="womenOnly!"></app-form-error>
         </div>
 
         <div class="form-control">

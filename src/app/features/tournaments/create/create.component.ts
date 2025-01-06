@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { nbPlayersValidator } from '../../../shared/validators/nb-players.directive';
 import { eloValidator } from '../../../shared/validators/elo.directive';
 import { endRegistrationValidator } from '../../../shared/validators/end-registration.directive';
@@ -31,8 +31,8 @@ export class CreateComponent {
     this.createTournamentForm = this.fb.group({
       name: ['', Validators.required],
       place: [''],
-      minPlayers: ['', [Validators.required, Validators.min(2), Validators.max(32)]],
-      maxPlayers: ['', [Validators.required, Validators.min(2), Validators.max(32)]],
+      minPlayers: [null, [Validators.required, Validators.min(2), Validators.max(32)]],
+      maxPlayers: [null, [Validators.required, Validators.min(2), Validators.max(32)]],
       minElo: ['', [Validators.min(0), Validators.max(3000)]],
       maxElo: ['', [Validators.min(0), Validators.max(3000)]],
       categoriesIds: this.fb.array([]),
@@ -89,31 +89,31 @@ export class CreateComponent {
     return this.createTournamentForm.dirty && !this.formSubmitted;
   }
 
-  get name() {
+  get name(): AbstractControl | null {
     return this.createTournamentForm.get('name');
   }
 
-  get place() {
+  get place(): AbstractControl | null {
     return this.createTournamentForm.get('place');
   }
 
-  get minPlayers() {
+  get minPlayers(): AbstractControl | null {
     return this.createTournamentForm.get('minPlayers');
   }
 
-  get maxPlayers() {
+  get maxPlayers(): AbstractControl | null {
     return this.createTournamentForm.get('maxPlayers');
   }
 
-  get minElo() {
+  get minElo(): AbstractControl | null {
     return this.createTournamentForm.get('minElo');
   }
 
-  get maxElo() {
+  get maxElo(): AbstractControl | null {
     return this.createTournamentForm.get('maxElo');
   }
 
-  get categoriesIds() {
+  get categoriesIds(): FormArray {
     return this.createTournamentForm.get('categoriesIds') as FormArray;
   }
 
@@ -121,11 +121,11 @@ export class CreateComponent {
     return this.categoriesIds.at(index) as FormControl;
   }
 
-  get womenOnly() {
+  get womenOnly(): AbstractControl | null {
     return this.createTournamentForm.get('womenOnly');
   }
 
-  get endRegistration() {
+  get endRegistration(): AbstractControl | null {
     return this.createTournamentForm.get('endRegistration');
   }
 }
